@@ -1,20 +1,13 @@
-import { ReachTheNumber } from './components/activities/ReachTheNumber/ReachTheNumber';
-import { LanguageSwitcher } from './components/main/LanguageSwitcher';
-import { Addition } from './core/expressions/operations/addition';
+import { LanguageSwitcher } from './components/main/LanguageSwitcher/LanguageSwitcher';
 import { CssBaseline } from '@mui/material';
+import { ReachTheNumberAllLevels } from './components/activities/ReachTheNumber/AllLevels/AllLevels';
 
 function App() {
   return (
     <>
       <CssBaseline />
       <LanguageSwitcher />
-      <ReachTheNumber
-        start={1}
-        steps={[
-          [Addition], [4, 5]
-        ]}
-        goal={19}
-      />
+      <ReachTheNumberAllLevels />
     </>
   )
 }

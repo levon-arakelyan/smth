@@ -1,6 +1,7 @@
-import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { styles } from "./styles";
 
 const languages: Map<string, string> = new Map<string, string>([
   ['gb', 'English'],
@@ -17,18 +18,20 @@ export function LanguageSwitcher() {
   };
 
   const languageOption = (code: string) => {
-    return <Box sx={{display: 'flex', alignItems: 'center'}}>
-      <Box sx={{display: 'flex', alignItems: 'center', border: '0.5px solid black'}}>
+    return <Box sx={styles.languageOptionBox}>
+      <Box sx={styles.flagBox}>
         <img src={`https://flagcdn.com/${code}.svg`} width={24} />
       </Box>
-      <Typography sx={{ml: 1}}>{languages.get(code)}</Typography>
+      <Typography sx={styles.countryCodeText}>{languages.get(code)}</Typography>
     </Box>
   }
 
-  return <Box sx={{position: 'absolute', right: 0, padding: 2}}>
-    <Button variant='outlined' onClick={(e) => setAnchor(e.currentTarget)} sx={{textTransform: 'none'}}>
+  return <Box sx={styles.mainBox}>
+    <Card onClick={(e) => setAnchor(e.currentTarget)} sx={styles.languageCard}>
+      <CardActionArea>
       {languageOption(i18n.language)}
-    </Button>
+      </CardActionArea>
+    </Card>
     <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>
       <MenuItem onClick={() => changeLanguage('gb')}>
         {languageOption('gb')}

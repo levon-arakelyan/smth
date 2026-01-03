@@ -1,4 +1,4 @@
-import type { MuiColor } from '../ui/colors';
+import type { MuiColor } from '../../../ui/colors';
 import { ExpressionStepType, type ExpressionStep } from './expression-step';
 
 const colorsMap = new Map<ExpressionStepType, MuiColor>([

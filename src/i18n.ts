@@ -7,21 +7,32 @@ i18n.use(initReactI18next).init({
       translation: {
         level: 'LEVEL',
         goal: 'Goal',
-        win: 'YOU WON!',
-        next: 'Next',
-        clear: 'Clear',
-        back: 'Back',
+        next: 'Confirm',
+        clear: 'Restart',
+        back: 'Undo',
         bringBack: 'Bring back',
-        removeAfter: 'Remove all steps after',
-        goToStep: 'Go to this step',
         removeAllFaded: 'This action will remove all faded equations',
         lastNonFaded: ', as well as last non-faded one',
-        addNewOne: ' and add new one'
+        addNewOne: ' and add new one',
+        victory: 'Victory!',
+        userReachedNumber: 'You have successfully reached the number {{number}}!',
+        nextLevel: 'Next level'
       },
     },
     ru: {
       translation: {
-        level: 'УРОВЕНЬ'
+        level: 'УРОВЕНЬ',
+        goal: 'Цель',
+        next: 'Подтвердить',
+        clear: 'Перезапуск',
+        back: 'Назад',
+        bringBack: 'Вернуть',
+        removeAllFaded: 'Это действие удалит не только все затускневшие равенства',
+        lastNonFaded: ', но и последнее не затускневшее',
+        addNewOne: ', но и создаст новое равенство',
+        victory: 'Победа!',
+        userReachedNumber: 'Ты успешно дошёл до числа {{number}}!',
+        nextLevel: 'Следующий уровень'
       }
     }
   },
