@@ -2,43 +2,38 @@ import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Expression } from '../../../../core/activities/ReachTheNumber/expressions/expression';
-import type { ExpressionStepOptions } from '../../../../core/activities/ReachTheNumber/expressions/expression-step-options';
 import type { ReachTheNumberLevelProps } from '../../../../core/activities/ReachTheNumber/props';
 import { History } from '../../../../core/activities/ReachTheNumber/history/equations-history';
 import { MainEquation } from '../MainEquation/MainEquation';
 import { EquationsHistory } from '../EquationsHistory/EquationsHistory';
 import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
-import { restrictions } from '../AllLevels/restrictions';
+import type { ExpressionMember } from '../../../../core/activities/ReachTheNumber/expressions/members/expression-member';
 
-export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted}: ReachTheNumberLevelProps) {
+export function ReachTheNumberLevel({start, members, goal, level, onLevelCompleted}: ReachTheNumberLevelProps) {
   const { t } = useTranslation();
 
-  const [expression, setExpression] = useState<Expression>(new Expression(start, steps));
+  const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
 
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [victory, setVictory] = useState<boolean>(false);
 
-  const onExpressionStepSelected = (step: ExpressionStepOptions, id: number): void => {
-    step.selectedId = id;
+  const onExpressionMemberSelected = (member: ExpressionMember, id: number): void => {
+    member.selectedChoiceIndex = id;
     setCurrentResult(expression.calculate());
   }
 
   const calculate = (): void => {
     const result = expression.calculate();
-    if (result > restrictions.maxNumber || result < restrictions.minNumber) {
-
-    }
-
     if (result === goal) {
       setVictory(true);
+      return;
     }
 
-    const expr = Expression.from(result, steps, expression.expressionStepOptions);
     history.insert(expression);
-    onHistoryChanged(expr)
+    onHistoryChanged(new Expression(result, expression.members))
   }
 
   const toNextLevel = (): void => {
@@ -50,14 +45,14 @@ export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted
 
   const onHistoryCleared = () => {
     history.clear(() => {
-      const expr = new Expression(start, steps);
+      const expr = new Expression(start, members);
       onHistoryChanged(expr)
     });
   }
 
   const onHistoryReverted = () => {
     history.revertDiscarded();
-    const expr = new Expression(history.last.expr.calculate(), steps);
+    const expr = new Expression(history.last.expr.calculate(), members);
     onHistoryChanged(expr)
   }
 
@@ -91,7 +86,7 @@ export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted
             expression={expression}
             historyStepsDiscarded={showTooltip}
             currentResult={currentResult}
-            onExpressionStepSelected={onExpressionStepSelected}
+            onExpressionMemberSelected={onExpressionMemberSelected}
             onSubmitted={calculate}
           />
 

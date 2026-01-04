@@ -1,10 +1,9 @@
-import type { OperationConstructor } from './operations/ibasic-operation';
-import { ExpressionEqualsStep, ExpressionNumberStep, ExpressionOperationStep, ExpressionStepType, type ExpressionStep } from './expression-step';
-import { ExpressionStepOptions } from './expression-step-options';
 import * as math from 'mathjs';
 import type { JSX } from '@emotion/react/jsx-runtime';
-
-export type ExpressionStepConstructorOptions = OperationConstructor[] | number[];
+import { Abs } from './members/operation-members/abs';
+import { Equality } from './members/operation-members/equality';
+import { ExpressionMember, ExpressionNumberMember, ExpressionOperationMember } from './members/expression-member';
+import { ExpressionNumberMemberChoice } from './members/expression-member-choice';
 
 export interface ICalculationResult {
   result?: number;
@@ -13,54 +12,55 @@ export interface ICalculationResult {
 }
 
 export class Expression {
-  public start: number = 0;
-  public expressionStepOptions: ExpressionStepOptions[] = [];
+  private _start: ExpressionNumberMember;
+  public get start(): number {
+    return Number(this._start.choices[0].visualSymbol);
+  }
+  private end: ExpressionOperationMember;
+  private _members: ExpressionMember[] = [];
+  public get members(): ExpressionMember[] {
+    return this._members;
+  }
 
-  constructor(start: number, expressionOptions: ExpressionStepConstructorOptions[]) {
-    this.start = start;
-    let i = 0;
-
-    const startExpression = new ExpressionStepOptions([new ExpressionNumberStep(this.start)], ExpressionStepType.Number, i++);
-    const midExpressions = expressionOptions.map(options => {
-      let steps: ExpressionStep[] = [];
-      let type = ExpressionStepType.Number;
-      if (this.isNumberArr(options)) {
-        steps = options.map(x => new ExpressionNumberStep(x as number));
-      } else {
-        type = ExpressionStepType.Operation;
-        steps = (options as OperationConstructor[]).map(Op => new ExpressionOperationStep(new Op()));
-      }
-      return new ExpressionStepOptions(steps, type, i++);
+  constructor(start: number, members: ExpressionMember[]) {
+    this._start = new ExpressionNumberMember([new ExpressionNumberMemberChoice(start)]);
+    this.end = new ExpressionOperationMember([new Equality()]);
+    this._members = [...members.map(m => m.clone())].map((member, i) => {
+      member.setId(i);
+      return member;
     });
-    const goalExpressions = new ExpressionStepOptions([new ExpressionEqualsStep()], ExpressionStepType.Equals, i++);
-    this.expressionStepOptions = [startExpression, ...midExpressions, goalExpressions];
   }
 
-  public static from(start: number, expressionOptions: ExpressionStepConstructorOptions[], steps: ExpressionStepOptions[]): Expression {
-    let newExpr: Expression = new Expression(start, expressionOptions);
-    for (let i = 0; i < steps.length; i++) {
-      newExpr.expressionStepOptions[i].selectedId = steps[i].selectedId;
-    }
-    return newExpr;
+  public get(): ExpressionMember[] {
+    return [this._start, ...this.members, this.end];
   }
 
-  public isNumberArr(arr: any[]): boolean {
-    return typeof arr[0] === 'number';
-  }
-
-  public get(forUi = false): string {
-    return this.expressionStepOptions.map(x => x.options[x.selectedId].get(!forUi)).join(forUi ? ' ' : '');
-  }
-
-  public getVisual(): string {
-    return `${this.get(true)}= ${this.calculate()}`
+  public getEquality(): string {
+    const equality = this.members.map(x => {
+      const choice = x.choices[x.selectedChoiceIndex];
+      return choice.visualSymbol;
+    }).join(' ');
+    return `${this.start} ${equality} = ${this.calculate()}`
   }
 
   public calculate(): number {
     try {
-      return math.round(math.evaluate(this.get()), 2);
+      return math.round(math.evaluate(this.getForCalculation()), 2);
     } catch {
       return NaN;
     }
+  }
+
+  private getForCalculation(): string {
+    return new Abs().parse(this.parseForCalculation());
+  }
+
+  private parseForCalculation(): string {
+    const equality = this.members.map(x => {
+      const choice = x.choices[x.selectedChoiceIndex];
+      return choice.mathSymbol;
+    }).join('');
+
+    return `${this.start}${equality}`
   }
 }

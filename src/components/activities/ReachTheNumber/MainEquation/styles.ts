@@ -13,19 +13,20 @@ export const styles: Record<string, SxProps<Theme>> = {
     gap: 1,
     marginBottom: 2,
   },
-  expressionStepBtn: {
+  expressionMemberBtn: {
     ['&:disabled']: {
       color: '#646e8f'
     },
     boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
-    position: 'relative'
+    position: 'relative',
+    minWidth: '32px',
   },
-  expressionStepBtnDropdownIcon: {
+  expressionMemberBtnDropdownIcon: {
     position: 'absolute',
     bottom: -2,
     right: 0
   },
-  expressionStepMenu: {
+  expressionMemberMenu: {
     display: 'flex',
     flexDirection: 'column'
   },

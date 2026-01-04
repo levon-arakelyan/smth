@@ -39,7 +39,7 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
               {i + 1}
             </Typography>
             <Typography variant="h5" sx={styles.historyItemText}>
-              {item.expr.getVisual()}
+              {item.expr.getEquality()}
             </Typography>
           </CardContent>
         </Card>

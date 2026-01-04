@@ -1,7 +1,6 @@
 import { Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import type { ExpressionStepOptions } from "../../../../core/activities/ReachTheNumber/expressions/expression-step-options";
 import type { MainEquationProps } from "../../../../core/activities/ReachTheNumber/props";
 import { WarningTooltip } from "../WarningTooltip/WarningTooltip";
 import { styles } from "./styles";
@@ -10,8 +9,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import BlockIcon from '@mui/icons-material/Block';
 import type { ICalculationResult } from '../../../../core/activities/ReachTheNumber/expressions/expression';
 import { restrictions } from "../AllLevels/restrictions";
+import type { ExpressionMember } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-member";
 
-export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionStepSelected, onSubmitted}: MainEquationProps) {
+export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionMemberSelected, onSubmitted}: MainEquationProps) {
   const { t } = useTranslation();
 
   const [menuAnchor, setMenuAnchor] = useState<{
@@ -19,16 +19,16 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
     anchor: HTMLElement | null;
   }>({ id: '', anchor: null });
 
-  const onMenuOpened = (step: ExpressionStepOptions, e: React.MouseEvent<HTMLButtonElement>): void => {
-    setMenuAnchor({ id: step.id, anchor: e.currentTarget });
+  const onMenuOpened = (member: ExpressionMember, e: React.MouseEvent<HTMLButtonElement>): void => {
+    setMenuAnchor({ id: member.id, anchor: e.currentTarget });
   };
 
   const onMenuClosed = (): void => {
     setMenuAnchor({ id: '', anchor: null });
   };
 
-  const onMenuItemClicked = (step: ExpressionStepOptions, i: number): void => {
-    onExpressionStepSelected(step, i)
+  const onMenuItemClicked = (member: ExpressionMember, i: number): void => {
+    onExpressionMemberSelected(member, i)
     onMenuClosed();
   }
 
@@ -68,29 +68,29 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
 
   return <Box sx={styles.mainBox}>
     <Box sx={styles.equationBox}>
-      {expression.expressionStepOptions.map((step, i) => <React.Fragment key={i}>
+      {expression.get().map((member, i) => <React.Fragment key={i}>
         <Button
-          variant={step.options.length > 1 ? 'contained' : 'outlined'}
-          disabled={step.options.length <= 1}
-          color={step.color}
-          onClick={e => onMenuOpened(step, e)}
-          sx={styles.expressionStepBtn}
+          variant={member.choices.length > 1 ? 'contained' : 'outlined'}
+          disabled={member.choices.length <= 1}
+          color={member.color}
+          onClick={e => onMenuOpened(member, e)}
+          sx={styles.expressionMemberBtn}
         >
-          <Typography variant='h3'>{step.options[step.selectedId].appearance}</Typography>
-          {step.options.length > 1 && <ArrowDropDownIcon sx={styles.expressionStepBtnDropdownIcon}/>}
+          <Typography variant='h3'>{member.choices[member.selectedChoiceIndex].visualSymbol}</Typography>
+          {member.choices.length > 1 && <ArrowDropDownIcon sx={styles.expressionMemberBtnDropdownIcon}/>}
         </Button>
-        {step.options.length > 1 ? <Menu
-          anchorEl={menuAnchor.id === step.id ? menuAnchor.anchor : null}
-          open={menuAnchor.id === step.id}
+        {member.choices.length > 1 ? <Menu
+          anchorEl={menuAnchor.id === member.id ? menuAnchor.anchor : null}
+          open={menuAnchor.id === member.id}
           onClose={onMenuClosed}
-          sx={styles.expressionStepMenu}
+          sx={styles.expressionMemberMenu}
         >
-          {step.options.map((option, j) => <MenuItem key={j} onClick={() => onMenuItemClicked(step, j)}>
+          {member.choices.map((choice, j) => <MenuItem key={j} onClick={() => onMenuItemClicked(member, j)}>
             <Button
               variant='contained'
-              color={step.color}
+              color={member.color}
             >
-              <Typography variant='h5'>{option.appearance}</Typography>
+              <Typography variant='h5'>{choice.visualSymbol}</Typography>
             </Button>
           </MenuItem>)}
         </Menu> : null}

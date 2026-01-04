@@ -1,10 +1,10 @@
-import type { Expression, ExpressionStepConstructorOptions } from "./expressions/expression";
-import type { ExpressionStepOptions } from "./expressions/expression-step-options";
+import type { Expression } from "./expressions/expression";
+import type { ExpressionMember } from "./expressions/members/expression-member";
 import type { History } from "./history/equations-history";
 
 export type ReachTheNumberLevelProps = {
   start: number;
-  steps: ExpressionStepConstructorOptions[];
+  members: ExpressionMember[];
   goal: number;
   level: number;
   onLevelCompleted?: () => void;
@@ -14,7 +14,7 @@ export type MainEquationProps = {
   expression: Expression;
   historyStepsDiscarded: boolean;
   currentResult: number;
-  onExpressionStepSelected: (step: ExpressionStepOptions, id: number) => void
+  onExpressionMemberSelected: (step: ExpressionMember, id: number) => void
   onSubmitted: () => void;
 }
 
