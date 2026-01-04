@@ -1,5 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { LocalStorageService } from './core/services/local-storage/local-storage';
+import { LocalStorageKey } from './core/services/local-storage/local-storage-keys';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -16,7 +18,11 @@ i18n.use(initReactI18next).init({
         addNewOne: ' and add new one',
         victory: 'Victory!',
         userReachedNumber: 'You have successfully reached the number {{number}}!',
-        nextLevel: 'Next level'
+        nextLevel: 'Next level',
+        calcError: 'Calculation error',
+        tooBigRes: 'The result is too big',
+        tooSmallRes: 'The result is too small',
+        divResNoInt: 'Division result must be an integer'
       },
     },
     ru: {
@@ -32,11 +38,15 @@ i18n.use(initReactI18next).init({
         addNewOne: ', но и создаст новое равенство',
         victory: 'Победа!',
         userReachedNumber: 'Ты успешно дошёл до числа {{number}}!',
-        nextLevel: 'Следующий уровень'
+        nextLevel: 'Следующий уровень',
+        calcError: 'Ошибка вычисления',
+        tooBigRes: 'Результат слишком большой',
+        tooSmallRes: 'Ресультат слишком маленький',
+        divResNoInt: 'Результатом деления должно быть целое число'
       }
     }
   },
-  lng: 'gb',
+  lng: LocalStorageService.get(LocalStorageKey.Language) ?? 'gb',
   fallbackLng: 'gb',
   interpolation: {
     escapeValue: false,

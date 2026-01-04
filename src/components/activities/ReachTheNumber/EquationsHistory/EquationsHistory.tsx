@@ -5,14 +5,24 @@ import RedoIcon from '@mui/icons-material/Redo';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import type { EquationsHistoryProps } from '../../../../core/activities/ReachTheNumber/props';
-import { RemovedHistoryStepsTooltip } from '../RemovedHistoryStepsTooltip/RemovedHistoryStepsTooltip';
+import { WarningTooltip } from '../WarningTooltip/WarningTooltip';
 import { styles, dynamicStyles } from './styles';
+import { useEffect, useRef } from 'react';
 
 export function EquationsHistory({history, onClearClicked, onRevertClicked, onRemoveFromThisStepClicked, onUndoClicked}: EquationsHistoryProps) {
   const { t } = useTranslation();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) {
+      return;
+    }
+    el.scrollTo({ top: el.scrollHeight });
+  }, [history.steps.length]);
 
   return <Box sx={styles.mainBox}>
-    <Box sx={styles.historyContainerBox}>
+    <Box sx={styles.historyContainerBox} ref={containerRef}>
       {history.steps.map((item, i) => (
         <Card
           key={i}
@@ -42,11 +52,11 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
             <RefreshIcon sx={styles.actionBtnIcon}/>{t('clear')}
           </Typography>
         </Button>
-        <Button variant='contained' onClick={onUndoClicked} sx={styles.undoBtn} disabled={history.isEmpty()}>
+        <Button variant='contained' onClick={onUndoClicked} sx={styles.undoBtn} disabled={history.isEmpty() || history.allDiscarded()}>
           <Typography sx={styles.actionBtnText} variant='h6'>
             <UndoIcon sx={styles.actionBtnIcon}/>{t('back')}
           </Typography>
-          {history.hasDiscarded() && <RemovedHistoryStepsTooltip additionalText={t('lastNonFaded')}/>}
+          {(!history.isEmpty() && history.hasDiscarded() && !history.allDiscarded()) && <WarningTooltip text={t('removeAllFaded') + t('lastNonFaded')}/>}
         </Button>
       </Box>
       <Button variant='contained' onClick={onRevertClicked} disabled={!history.hasDiscarded()}>

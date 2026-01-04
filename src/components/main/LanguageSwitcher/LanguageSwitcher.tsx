@@ -2,6 +2,8 @@ import { Box, Card, CardActionArea, Menu, MenuItem, Typography } from "@mui/mate
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
+import { LocalStorageService } from "../../../core/services/local-storage/local-storage";
+import { LocalStorageKey } from "../../../core/services/local-storage/local-storage-keys";
 
 const languages: Map<string, string> = new Map<string, string>([
   ['gb', 'English'],
@@ -14,6 +16,7 @@ export function LanguageSwitcher() {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    LocalStorageService.set(LocalStorageKey.Language, lng);
     setAnchor(null);
   };
 

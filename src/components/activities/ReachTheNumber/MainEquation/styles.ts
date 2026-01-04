@@ -29,11 +29,22 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     flexDirection: 'column'
   },
+  expressionResultBox: {
+    position: 'relative'
+  },
   expressionReultBtn: {
-    boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);'
+    boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
+    position: 'relative'
   },
   expressionReultBtnText: {
-    color: '#e0e0e0'
+    color: '#e0e0e0',
+  },
+  expressionReultBtnIcon: {
+    fontSize: '2rem'
+  },
+  expressionReultBtnNegInfinity: {
+    marginLeft: 1,
+    fontSize: '2rem'
   },
   nextBtnBox: {
     display: 'flex',

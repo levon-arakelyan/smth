@@ -1,4 +1,4 @@
-import type { ExpressionStepConstructorOptions } from "./expressions/expression";
+import type { Expression, ExpressionStepConstructorOptions } from "./expressions/expression";
 import type { ExpressionStepOptions } from "./expressions/expression-step-options";
 import type { History } from "./history/equations-history";
 
@@ -11,8 +11,8 @@ export type ReachTheNumberLevelProps = {
 }
 
 export type MainEquationProps = {
-  expressionStepOptions: ExpressionStepOptions[];
-  showTooltip: boolean;
+  expression: Expression;
+  historyStepsDiscarded: boolean;
   currentResult: number;
   onExpressionStepSelected: (step: ExpressionStepOptions, id: number) => void
   onSubmitted: () => void;
@@ -26,8 +26,8 @@ export type EquationsHistoryProps = {
   onUndoClicked: () => void;
 };
 
-export type RemovedHistoryStepsTooltipProps = {
-  additionalText?: string;
+export type WarningTooltipProps = {
+  text?: string;
 };
 
 export type VictoryModalProps = {

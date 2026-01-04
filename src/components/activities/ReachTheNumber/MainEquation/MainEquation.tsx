@@ -3,11 +3,15 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { ExpressionStepOptions } from "../../../../core/activities/ReachTheNumber/expressions/expression-step-options";
 import type { MainEquationProps } from "../../../../core/activities/ReachTheNumber/props";
-import { RemovedHistoryStepsTooltip } from "../RemovedHistoryStepsTooltip/RemovedHistoryStepsTooltip";
+import { WarningTooltip } from "../WarningTooltip/WarningTooltip";
 import { styles } from "./styles";
+import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import BlockIcon from '@mui/icons-material/Block';
+import type { ICalculationResult } from '../../../../core/activities/ReachTheNumber/expressions/expression';
+import { restrictions } from "../AllLevels/restrictions";
 
-export function MainEquation({expressionStepOptions, showTooltip, currentResult, onExpressionStepSelected, onSubmitted}: MainEquationProps) {
+export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionStepSelected, onSubmitted}: MainEquationProps) {
   const { t } = useTranslation();
 
   const [menuAnchor, setMenuAnchor] = useState<{
@@ -28,9 +32,43 @@ export function MainEquation({expressionStepOptions, showTooltip, currentResult,
     onMenuClosed();
   }
 
+  const getResultValue = (): ICalculationResult => {
+    if (Number.isNaN(currentResult)) {
+      return {
+        errorText: t('calcError'),
+        errorIcon: <BlockIcon sx={styles.expressionReultBtnIcon} />
+      };
+    }
+
+    if (currentResult >= restrictions.maxNumber) {
+      return {
+        errorText: t('tooBigRes'),
+        errorIcon: <AllInclusiveIcon sx={styles.expressionReultBtnIcon} />
+      };
+    }
+
+    if (currentResult <= restrictions.minNumber) {
+      return {
+        errorText: t('tooSmallRes'),
+        errorIcon: <Box>-<AllInclusiveIcon sx={styles.expressionReultBtnNegInfinity}/></Box>
+      };
+    }
+
+    if (Number.isInteger(expression.start) && !Number.isInteger(currentResult)) {
+      return {
+        errorText: t('divResNoInt'),
+        errorIcon: <BlockIcon sx={styles.expressionReultBtnIcon} />
+      };
+    }
+
+    return {result: currentResult};
+  }
+
+  const result = getResultValue();
+
   return <Box sx={styles.mainBox}>
     <Box sx={styles.equationBox}>
-      {expressionStepOptions.map((step, i) => <React.Fragment key={i}>
+      {expression.expressionStepOptions.map((step, i) => <React.Fragment key={i}>
         <Button
           variant={step.options.length > 1 ? 'contained' : 'outlined'}
           disabled={step.options.length <= 1}
@@ -57,15 +95,21 @@ export function MainEquation({expressionStepOptions, showTooltip, currentResult,
           </MenuItem>)}
         </Menu> : null}
       </React.Fragment>)}
-      <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
-        <Typography variant='h3' sx={styles.expressionReultBtnText}>{currentResult}</Typography>
-      </Button>
+
+      <Box sx={styles.expressionResultBox}>
+        <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
+          <Typography variant='h3' sx={styles.expressionReultBtnText}>
+            {result.errorText ? result.errorIcon : result.result}
+          </Typography>
+        </Button>
+        {result.errorText && <WarningTooltip text={result.errorText}/>}
+      </Box>
     </Box>
     <Box sx={styles.nextBtnBox}>
-      <Button variant='contained' onClick={onSubmitted} sx={styles.nextBtn}>
+      <Button variant='contained' onClick={onSubmitted} sx={styles.nextBtn} disabled={!!result.errorText}>
         <Typography variant='h5' sx={styles.nextBtnText}>{t('next')}</Typography>
-        <Typography variant="h5" sx={styles.nextBtnExclmation}>!</Typography>
-        {showTooltip && <RemovedHistoryStepsTooltip additionalText={t('addNewOne')} />}
+        <Typography variant='h5' sx={styles.nextBtnExclmation}>!</Typography>
+        {historyStepsDiscarded && <WarningTooltip text={t('removeAllFaded') + t('addNewOne')} />}
       </Button>
     </Box>
   </Box>

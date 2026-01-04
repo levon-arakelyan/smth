@@ -17,14 +17,30 @@ export const styles: Record<string, SxProps<Theme>> = {
     marginTop: 2,
   },
   historyContainerBox: {
-    padding: 0,
+    marginX: '-10px',
+    paddingX: '4px',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
     gap: 1,
     overflowY: 'auto',
+    overflowX: 'hidden',
+    scrollBehavior: 'smooth',
     minHeight: 0,
     flexGrow: 1,
     gridAutoRows: 'min-content',
+    scrollbarGutter: 'stable both-edges',
+    '&::-webkit-scrollbar': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'transparent',
+      borderRadius: 4,
+    },
+    '&:hover': {
+      '&::-webkit-scrollbar-thumb': {
+        background: 'rgba(0,0,0,0.25)',
+      }
+    },
   },
   removeIconContainerBtn: {
     position: 'absolute',

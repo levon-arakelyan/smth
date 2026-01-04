@@ -9,6 +9,7 @@ import { MainEquation } from '../MainEquation/MainEquation';
 import { EquationsHistory } from '../EquationsHistory/EquationsHistory';
 import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
+import { restrictions } from '../AllLevels/restrictions';
 
 export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted}: ReachTheNumberLevelProps) {
   const { t } = useTranslation();
@@ -27,6 +28,10 @@ export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted
 
   const calculate = (): void => {
     const result = expression.calculate();
+    if (result > restrictions.maxNumber || result < restrictions.minNumber) {
+
+    }
+
     if (result === goal) {
       setVictory(true);
     }
@@ -83,8 +88,8 @@ export function ReachTheNumberLevel({start, steps, goal, level, onLevelCompleted
         </Box>
         <Box sx={styles.gameBox}>
           <MainEquation
-            expressionStepOptions={expression.expressionStepOptions}
-            showTooltip={showTooltip}
+            expression={expression}
+            historyStepsDiscarded={showTooltip}
             currentResult={currentResult}
             onExpressionStepSelected={onExpressionStepSelected}
             onSubmitted={calculate}

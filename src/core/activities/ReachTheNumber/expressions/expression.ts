@@ -2,8 +2,16 @@ import type { OperationConstructor } from './operations/ibasic-operation';
 import { ExpressionEqualsStep, ExpressionNumberStep, ExpressionOperationStep, ExpressionStepType, type ExpressionStep } from './expression-step';
 import { ExpressionStepOptions } from './expression-step-options';
 import * as math from 'mathjs';
+import type { JSX } from '@emotion/react/jsx-runtime';
 
 export type ExpressionStepConstructorOptions = OperationConstructor[] | number[];
+
+export interface ICalculationResult {
+  result?: number;
+  errorIcon?: JSX.Element;
+  errorText?: string;
+}
+
 export class Expression {
   public start: number = 0;
   public expressionStepOptions: ExpressionStepOptions[] = [];
@@ -49,6 +57,10 @@ export class Expression {
   }
 
   public calculate(): number {
-    return math.round(math.evaluate(this.get()), 4);
+    try {
+      return math.round(math.evaluate(this.get()), 2);
+    } catch {
+      return NaN;
+    }
   }
 }

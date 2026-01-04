@@ -40,7 +40,7 @@ export class History {
   }
 
   public removeLast(onRemoved: (step: IHistoryStep) => void): void {
-    if (this.isEmpty()) {
+    if (this.isEmpty() || this.allDiscarded()) {
       return;
     }
     this.steps = this.steps.filter(x => !x.discarded);
@@ -54,6 +54,10 @@ export class History {
 
   public hasDiscarded(): boolean {
     return this.steps.some(x => x.discarded);
+  }
+
+  public allDiscarded(): boolean {
+    return !this.steps.some(x => !x.discarded)
   }
 
   public new(): History {
