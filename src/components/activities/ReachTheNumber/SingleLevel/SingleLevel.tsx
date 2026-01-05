@@ -21,19 +21,19 @@ export function ReachTheNumberLevel({start, members, goal, level, onLevelComplet
   const [victory, setVictory] = useState<boolean>(false);
 
   const onExpressionMemberSelected = (member: ExpressionMember, id: number): void => {
-    member.selectedChoiceIndex = id;
+    member.choiceIndex = id;
     setCurrentResult(expression.calculate());
   }
 
   const calculate = (): void => {
+    history.insert(expression);
     const result = expression.calculate();
     if (result === goal) {
       setVictory(true);
-      return;
+      onHistoryChanged(undefined, false, result);
+    } else {
+      onHistoryChanged(new Expression(result, expression.members))
     }
-
-    history.insert(expression);
-    onHistoryChanged(new Expression(result, expression.members))
   }
 
   const toNextLevel = (): void => {
@@ -64,10 +64,19 @@ export function ReachTheNumberLevel({start, members, goal, level, onLevelComplet
     history.removeLast(step => onHistoryChanged(step.expr));
   }
 
-  const onHistoryChanged = (expr: Expression, tooltip: boolean = false) => {
-    setExpression(expr);
-    setCurrentResult(expr.calculate());
-    setShowTooltip(tooltip);
+  const onHistoryChanged = (expr?: Expression, tooltip?: boolean, result?: number) => {
+    if (expr) {
+      setExpression(expr);
+    }
+
+    setShowTooltip(tooltip == null ? false : tooltip);
+
+    if (result != null) {
+      setCurrentResult(result);
+    } else if (expr != null) {
+      setCurrentResult(expr.calculate());
+    }
+
     setHistory(history.new())
   }
 

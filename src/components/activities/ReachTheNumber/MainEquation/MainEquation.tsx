@@ -10,6 +10,8 @@ import BlockIcon from '@mui/icons-material/Block';
 import type { ICalculationResult } from '../../../../core/activities/ReachTheNumber/expressions/expression';
 import { restrictions } from "../AllLevels/restrictions";
 import type { ExpressionMember } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-member";
+import { MathJax } from "better-react-mathjax";
+import { LatexService } from "../../../../core/services/latex/latex-service";
 
 export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionMemberSelected, onSubmitted}: MainEquationProps) {
   const { t } = useTranslation();
@@ -54,7 +56,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
       };
     }
 
-    if (Number.isInteger(expression.start) && !Number.isInteger(currentResult)) {
+    if (Number.isInteger(expression.start.choice.calculationSymbol) && !Number.isInteger(currentResult)) {
       return {
         errorText: t('divResNoInt'),
         errorIcon: <BlockIcon sx={styles.expressionReultBtnIcon} />
@@ -64,16 +66,23 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
     return {result: currentResult};
   }
 
-  const generateExpressionMember = (member: ExpressionMember) => {
+  const renderMath = (math: string) => {
+    return <MathJax>{LatexService.render(math)}</MathJax>
+  }
+
+  const renderExpressionMember = (member: ExpressionMember) => {
+    if (member.choices.length <= 1) {
+      return renderMath(member.render());
+    }
+
     return <>
       <Button
-        variant={member.choices.length > 1 ? 'contained' : 'outlined'}
-        disabled={member.choices.length <= 1}
+        variant='contained'
         color={member.color}
         onClick={e => onMenuOpened(member, e)}
         sx={styles.expressionMemberBtn}
       >
-        <Typography variant='h3'>{member.choices[member.selectedChoiceIndex].mainEquationSymbol}</Typography>
+        <Typography>{renderMath(member.render())}</Typography>
         {member.choices.length > 1 && <ArrowDropDownIcon sx={styles.expressionMemberBtnDropdownIcon}/>}
       </Button>
       {member.choices.length > 1 && <Menu
@@ -83,31 +92,41 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
         sx={styles.expressionMemberMenu}
       >
         {member.choices.map((choice, j) => <MenuItem key={`${member.id} ${j}`} onClick={() => onMenuItemClicked(member, j)}>
-          <Button
-            variant='contained'
-            color={member.color}
-          >
-            <Typography variant='h5'>{choice.mainEquationSymbol}</Typography>
+          <Button variant='contained' color={member.color}>
+            <Typography variant='h5'>{choice.visualSymbol}</Typography>
           </Button>
         </MenuItem>)}
       </Menu>}
-    </>
+    </>;
+  }
+
+  const renderSubmember = (member: ExpressionMember) => {
+    const sub = member.submember;
+    if (!sub || (member.choices.length <= 1 && sub.choices.length <= 1)) {
+      return null;
+    }
+
+    return <Box sx={styles.submemberBox}>
+      {sub.choices.length <= 1 ? sub.choice.visualSymbol : renderExpressionMember(sub)}
+    </Box>;
   }
 
   const result = getResultValue();
 
   return <Box sx={styles.mainBox}>
     <Box sx={styles.equationBox}>
-      {expression.full().map(member => <Box sx={{position: 'relative'}} key={member.id}>
-        {generateExpressionMember(member)}
-        {member.submember && <Box sx={{position: 'absolute', top: 0, right: 0, transform: 'translate(50%, -50%) scale(0.5)'}}>
-          {generateExpressionMember(member.submember)}
-        </Box>}
-      </Box>)}
+      <Box sx={styles.equationSubBox}>
+        {expression.full().map(member => (
+          <Box sx={styles.expressionMemberBox} key={member.id}>
+            {renderExpressionMember(member)}
+            {renderSubmember(member)}
+          </Box>
+        ))}
+      </Box>
       <Box sx={styles.expressionResultBox}>
         <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
-          <Typography variant='h3' sx={styles.expressionReultBtnText}>
-            {result.errorText ? result.errorIcon : result.result}
+          <Typography sx={styles.expressionReultBtnText}>
+            {result.errorText ? result.errorIcon : renderMath(`${result.result}`)}
           </Typography>
         </Button>
         {result.errorText && <WarningTooltip text={result.errorText}/>}

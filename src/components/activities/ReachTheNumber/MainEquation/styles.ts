@@ -1,5 +1,8 @@
 import type { SxProps, Theme } from "@mui/material";
 
+const latexFontSize: number = 40;
+const expressionMemberBoxMinWidth = 32;
+
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
     borderRadius: 6,
@@ -10,8 +13,18 @@ export const styles: Record<string, SxProps<Theme>> = {
   equationBox: {
     display: 'flex',
     justifyContent: 'center',
-    gap: 1,
+    alignItems: 'center',
+    gap: 2,
     marginBottom: 2,
+  },
+  equationSubBox: {
+    fontSize: `${latexFontSize}px`,
+    display: 'flex',
+    gap: 2,
+    alignItems: 'center'
+  },
+  expressionMemberBox: {
+    position: 'relative'
   },
   expressionMemberBtn: {
     ['&:disabled']: {
@@ -19,7 +32,10 @@ export const styles: Record<string, SxProps<Theme>> = {
     },
     boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
     position: 'relative',
-    minWidth: '32px',
+    minWidth: `${expressionMemberBoxMinWidth}px`,
+    '& p': {
+      fontSize: `${latexFontSize}px`,
+    }
   },
   expressionMemberBtnDropdownIcon: {
     position: 'absolute',
@@ -30,15 +46,22 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     flexDirection: 'column'
   },
+  submemberBox: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    transform: 'translate(50%, -25%) scale(0.5)'
+  },
   expressionResultBox: {
     position: 'relative'
   },
   expressionReultBtn: {
     boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
-    position: 'relative'
+    position: 'relative',
+    minWidth: `${expressionMemberBoxMinWidth}px`,
   },
   expressionReultBtnText: {
-    color: '#e0e0e0',
+    fontSize: `${latexFontSize}px`
   },
   expressionReultBtnIcon: {
     fontSize: '2rem'

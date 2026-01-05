@@ -8,6 +8,7 @@ import type { EquationsHistoryProps } from '../../../../core/activities/ReachThe
 import { WarningTooltip } from '../WarningTooltip/WarningTooltip';
 import { styles, dynamicStyles } from './styles';
 import { useEffect, useRef } from 'react';
+import { MathJax } from 'better-react-mathjax';
 
 export function EquationsHistory({history, onClearClicked, onRevertClicked, onRemoveFromThisStepClicked, onUndoClicked}: EquationsHistoryProps) {
   const { t } = useTranslation();
@@ -39,7 +40,7 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
               {i + 1}
             </Typography>
             <Typography variant="h5" sx={styles.historyItemText}>
-              {item.expr.getEquality()}
+              <MathJax>{item.expr.render(true)}</MathJax>
             </Typography>
           </CardContent>
         </Card>
