@@ -28,7 +28,7 @@ export class ExpressionBuilder {
 
   public pows(...choices: number[]): this {
     const member = new ExpressionPowerMember(choices.map(n => new ExpressionPowerMemberChoice(n)));
-    this.members.push(member);
+    this.members[this.members.length - 1].setSubmember(member);
     return this;
   }
 

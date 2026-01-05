@@ -64,38 +64,46 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
     return {result: currentResult};
   }
 
+  const generateExpressionMember = (member: ExpressionMember) => {
+    return <>
+      <Button
+        variant={member.choices.length > 1 ? 'contained' : 'outlined'}
+        disabled={member.choices.length <= 1}
+        color={member.color}
+        onClick={e => onMenuOpened(member, e)}
+        sx={styles.expressionMemberBtn}
+      >
+        <Typography variant='h3'>{member.choices[member.selectedChoiceIndex].mainEquationSymbol}</Typography>
+        {member.choices.length > 1 && <ArrowDropDownIcon sx={styles.expressionMemberBtnDropdownIcon}/>}
+      </Button>
+      {member.choices.length > 1 && <Menu
+        anchorEl={menuAnchor.id === member.id ? menuAnchor.anchor : null}
+        open={menuAnchor.id === member.id}
+        onClose={onMenuClosed}
+        sx={styles.expressionMemberMenu}
+      >
+        {member.choices.map((choice, j) => <MenuItem key={`${member.id} ${j}`} onClick={() => onMenuItemClicked(member, j)}>
+          <Button
+            variant='contained'
+            color={member.color}
+          >
+            <Typography variant='h5'>{choice.mainEquationSymbol}</Typography>
+          </Button>
+        </MenuItem>)}
+      </Menu>}
+    </>
+  }
+
   const result = getResultValue();
 
   return <Box sx={styles.mainBox}>
     <Box sx={styles.equationBox}>
-      {expression.get().map((member, i) => <React.Fragment key={i}>
-        <Button
-          variant={member.choices.length > 1 ? 'contained' : 'outlined'}
-          disabled={member.choices.length <= 1}
-          color={member.color}
-          onClick={e => onMenuOpened(member, e)}
-          sx={styles.expressionMemberBtn}
-        >
-          <Typography variant='h3'>{member.choices[member.selectedChoiceIndex].visualSymbol}</Typography>
-          {member.choices.length > 1 && <ArrowDropDownIcon sx={styles.expressionMemberBtnDropdownIcon}/>}
-        </Button>
-        {member.choices.length > 1 ? <Menu
-          anchorEl={menuAnchor.id === member.id ? menuAnchor.anchor : null}
-          open={menuAnchor.id === member.id}
-          onClose={onMenuClosed}
-          sx={styles.expressionMemberMenu}
-        >
-          {member.choices.map((choice, j) => <MenuItem key={j} onClick={() => onMenuItemClicked(member, j)}>
-            <Button
-              variant='contained'
-              color={member.color}
-            >
-              <Typography variant='h5'>{choice.visualSymbol}</Typography>
-            </Button>
-          </MenuItem>)}
-        </Menu> : null}
-      </React.Fragment>)}
-
+      {expression.full().map(member => <Box sx={{position: 'relative'}} key={member.id}>
+        {generateExpressionMember(member)}
+        {member.submember && <Box sx={{position: 'absolute', top: 0, right: 0, transform: 'translate(50%, -50%) scale(0.5)'}}>
+          {generateExpressionMember(member.submember)}
+        </Box>}
+      </Box>)}
       <Box sx={styles.expressionResultBox}>
         <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
           <Typography variant='h3' sx={styles.expressionReultBtnText}>

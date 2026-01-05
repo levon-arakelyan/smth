@@ -26,18 +26,23 @@ export function ReachTheNumberAllLevels() {
     LocalStorageService.set(LocalStorageKey.ReachTheNumber, { data, checksum });
   };
 
-  const [level, setLevel] = useState<number>(loadLevel());
+  const [levelIndex, setLevelIndex] = useState<number>(loadLevel());
 
   const onLevelCompleted = () => {
-    const newLevel = level === levels.length - 1 ? 0 : level + 1;
-    setLevel(newLevel);
+    const newLevel = levelIndex === levels.length - 1 ? 0 : levelIndex + 1;
+    setLevelIndex(newLevel);
     saveLevel(newLevel);
   };
 
+  const allLevels = levels.map(l => ({...l, expr: l.expr.build()}));
+  const currentLevel = allLevels[levelIndex];
   return (
     <ReachTheNumberLevel
-      key={level}
-      {...levels[level]}
+      key={levelIndex}
+      start={currentLevel.start}
+      goal={currentLevel.goal}
+      level={levelIndex + 1}
+      members={currentLevel.expr}
       onLevelCompleted={onLevelCompleted}
     />
   );
