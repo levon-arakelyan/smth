@@ -14,8 +14,18 @@ export type MainEquationProps = {
   expression: Expression;
   historyStepsDiscarded: boolean;
   currentResult: number;
-  onExpressionMemberSelected: (step: ExpressionMember, id: number) => void
+  onExpressionMemberSelected: () => void
   onSubmitted: () => void;
+}
+
+export type ExpressionMemberViewProps = {
+  member: ExpressionMember;
+  onExpressionMemberSelected?: (index: number) => void
+}
+
+export type ExpressionResultProps = {
+  start: string;
+  result: number;
 }
 
 export type EquationsHistoryProps = {
@@ -34,4 +44,8 @@ export type VictoryModalProps = {
   open: boolean;
   goal: number;
   onNextLevelClicked: () => void;
+}
+
+export type LatexProps = {
+  mathExpr: string | number | undefined;
 }

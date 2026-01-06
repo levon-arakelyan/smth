@@ -1,27 +1,14 @@
+export type ExpressionMemberChoiceConstructor = new (...args: any[]) => ExpressionMemberChoice;
 export class ExpressionMemberChoice {
-  public visualSymbol: string;
-  public calculationSymbol: string;
+  public viewSymbol: string;
+  public mathSymbol: string;
 
-  constructor(visual: string, calculation?: string) {
-    this.visualSymbol = visual;
-    this.calculationSymbol = calculation ?? this.visualSymbol;
+  constructor(view: any, math?: any) {
+    this.viewSymbol = view.toString();
+    this.mathSymbol = math?.toString() ?? this.viewSymbol
+  }
+
+  public clone(): ExpressionMemberChoice {
+    return new ExpressionMemberChoice(this.viewSymbol, this.mathSymbol);
   }
 }
-
-export class ExpressionNumberMemberChoice extends ExpressionMemberChoice {
-  constructor(n: number) {
-    super(`${n}`);
-  }
-}
-
-export class ExpressionPowerMemberChoice extends ExpressionMemberChoice {
-  constructor(n: number) {
-    super(`${n}`,`^${n}`);
-  }
-}
-
-export type OperationConstructor = new (...args: any[]) => ExpressionOperationMemberChoice;
-export class ExpressionOperationMemberChoice extends ExpressionMemberChoice {
-
-}
-

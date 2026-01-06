@@ -1,11 +1,13 @@
 import * as math from 'mathjs';
 import type { JSX } from '@emotion/react/jsx-runtime';
-import { Equality } from './members/operation-members/equality';
-import { ExpressionMember, ExpressionNumberMember, ExpressionOperationMember } from './members/expression-member';
-import { ExpressionNumberMemberChoice } from './members/expression-member-choice';
+import { Equality } from './members/expression-operation-members/equality';
 import { LatexService } from '../../../services/latex/latex-service';
+import { ExpressionNumberMember } from './members/expression-number-member';
+import { ExpressionOperationMember } from './members/expression-operation-members/expression-operation-member';
+import { ExpressionMember } from './members/expression-member';
+import { ExpressionMemberChoice } from './members/expression-member-choice';
 
-export interface ICalculationResult {
+export interface IHandledResult {
   result?: number;
   errorIcon?: JSX.Element;
   errorText?: string;
@@ -24,12 +26,12 @@ export class Expression {
     for (let i = 0; i < members.length; i++, j++) {
       const cloned = members[i].clone();
       cloned.setId(j);
-      if (cloned.submember) {
-        cloned.submember.setId(++j);
+      if (cloned.submembers?.length) {
+        cloned.submembers.forEach(x => x.setId(++j));
       }
       this._members.push(cloned)
     }
-    this.start = new ExpressionNumberMember([new ExpressionNumberMemberChoice(start)]);
+    this.start = new ExpressionNumberMember([new ExpressionMemberChoice(start)]);
     this.start.setId(++j);
     this._end = new ExpressionOperationMember([new Equality()]);
     this._end.setId(++j);
@@ -39,13 +41,10 @@ export class Expression {
     return [this.start, ...this.members, this._end];
   }
 
-  public render(renderResult: boolean = false): string {
-    let equality = this.full().map(x => x.render(renderResult)).join('');
-    if (renderResult) {
-      const result = new ExpressionNumberMember([new ExpressionNumberMemberChoice(this.calculate())])
-      equality = `${equality}${result.render()}`
-    }
-    return LatexService.render(equality);
+  public render(): string {
+    let equality = this.full().map(x => x.renderViewMath()).join('');
+    const result = new ExpressionNumberMember([new ExpressionMemberChoice(this.calculate())])
+    return LatexService.render(`${equality}${result.renderViewMath()}`)
   }
 
   public calculate(): number {
@@ -57,22 +56,7 @@ export class Expression {
   }
 
   private getMathExpression(): string {
-    const equality = this.getChoices().map(x => x.calculationSymbol).join('');
-    return `${this.start.choice.calculationSymbol}${equality}`
-  }
-
-  private getChoices(): ExpressionNumberMemberChoice[] {
-    const res: ExpressionNumberMemberChoice[] = [];
-
-    this.members.forEach(x => {
-      const choice = x.choice;
-      let submemberChoice = x.submember?.choice;
-
-      res.push(choice);
-      if (submemberChoice) {
-        res.push(submemberChoice);
-      }
-    });
-    return res;
+    const equality = this.members.map(x => x.renderMath()).join('');
+    return `${this.start.choice.mathSymbol}${equality}`
   }
 }

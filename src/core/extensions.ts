@@ -1,4 +1,4 @@
-import { Power } from "./activities/ReachTheNumber/expressions/members/operation-members/power";
+import { Power } from "./activities/ReachTheNumber/expressions/members/expression-operation-members/power";
 
 declare global {
   interface Array<T> {

@@ -1,5 +1,8 @@
-import { ExpressionMember, ExpressionNumberMember, ExpressionPowerMember, ExpressionOperationMember } from "./members/expression-member";
-import { ExpressionNumberMemberChoice, ExpressionPowerMemberChoice, type OperationConstructor } from "./members/expression-member-choice";
+import { ExpressionNumberMember } from "./members/expression-number-member";
+import { ExpressionOperationMember } from "./members/expression-operation-members/expression-operation-member";
+import { ExpressionPowerMember } from "./members/expression-power-member";
+import type { ExpressionMember } from "./members/expression-member";
+import { ExpressionMemberChoice, type ExpressionMemberChoiceConstructor } from "./members/expression-member-choice";
 
 export class ExpressionBuilder {
   private members: ExpressionMember[] = [];
@@ -15,24 +18,24 @@ export class ExpressionBuilder {
     return new ExpressionBuilder().pows(...choices);
   }
 
-  public static ops(...choices: OperationConstructor[]): ExpressionBuilder {
+  public static ops(...choices: ExpressionMemberChoiceConstructor[]): ExpressionBuilder {
     return new ExpressionBuilder().ops(...choices);
   }
 
   // Chainable instance methods
   public nums(...choices: number[]): this {
-    const member = new ExpressionNumberMember(choices.map(n => new ExpressionNumberMemberChoice(n)));
+    const member = new ExpressionNumberMember(choices.map(n => new ExpressionMemberChoice(n.toString())));
     this.members.push(member);
     return this;
   }
 
   public pows(...choices: number[]): this {
-    const member = new ExpressionPowerMember(choices.map(n => new ExpressionPowerMemberChoice(n)));
-    this.members[this.members.length - 1].setSubmember(member);
+    const member = new ExpressionPowerMember(choices.map(n => new ExpressionMemberChoice(n.toString())));
+    this.members[this.members.length - 1].setSubmembers([member]);
     return this;
   }
 
-  public ops(...choices: OperationConstructor[]): this {
+  public ops(...choices: ExpressionMemberChoiceConstructor[]): this {
     const member = new ExpressionOperationMember(choices.map(Op => new Op()));
     this.members.push(member);
     return this;

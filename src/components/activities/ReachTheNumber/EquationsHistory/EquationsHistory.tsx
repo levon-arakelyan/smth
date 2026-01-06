@@ -40,7 +40,7 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
               {i + 1}
             </Typography>
             <Typography variant="h5" sx={styles.historyItemText}>
-              <MathJax>{item.expr.render(true)}</MathJax>
+              <MathJax>{item.expr.render()}</MathJax>
             </Typography>
           </CardContent>
         </Card>

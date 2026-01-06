@@ -8,7 +8,6 @@ import { MainEquation } from '../MainEquation/MainEquation';
 import { EquationsHistory } from '../EquationsHistory/EquationsHistory';
 import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
-import type { ExpressionMember } from '../../../../core/activities/ReachTheNumber/expressions/members/expression-member';
 
 export function ReachTheNumberLevel({start, members, goal, level, onLevelCompleted}: ReachTheNumberLevelProps) {
   const { t } = useTranslation();
@@ -20,8 +19,7 @@ export function ReachTheNumberLevel({start, members, goal, level, onLevelComplet
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [victory, setVictory] = useState<boolean>(false);
 
-  const onExpressionMemberSelected = (member: ExpressionMember, id: number): void => {
-    member.choiceIndex = id;
+  const onExpressionMemberSelected = (): void => {
     setCurrentResult(expression.calculate());
   }
 

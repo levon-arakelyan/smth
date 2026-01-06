@@ -1,9 +1,8 @@
 import { ExpressionBuilder as Expr } from "../../../../core/activities/ReachTheNumber/expressions/expression-builder";
-import { Addition } from "../../../../core/activities/ReachTheNumber/expressions/members/operation-members/addition";
-import { LeftAbs } from "../../../../core/activities/ReachTheNumber/expressions/members/operation-members/left-abs";
-import { Multiplication } from "../../../../core/activities/ReachTheNumber/expressions/members/operation-members/multiplication";
-import { RightAbs } from "../../../../core/activities/ReachTheNumber/expressions/members/operation-members/right-abs";
-import { Subtraction } from "../../../../core/activities/ReachTheNumber/expressions/members/operation-members/subtraction";
+import { Addition } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/addition";
+import { Division } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/division";
+import { Multiplication } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/multiplication";
+import { Subtraction } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/subtraction";
 
 export interface ILevel {
   start: number;
@@ -29,15 +28,11 @@ export const levels: ILevel[] = [
     goal: 9,
     expr: Expr
       .ops(Multiplication, Subtraction)
-      .nums(5)
-      .pows(2)
-      .ops(Addition)
-      .ops(LeftAbs)
-      .nums(-5)
-      .ops(Addition, Multiplication)
-      .ops(LeftAbs)
-      .nums(-4, -3, -2)
-      .ops(RightAbs)
-      .ops(RightAbs)
+      // .ops(LeftAbs)
+      .nums(2, 3)
+      .pows(2, 3)
+      .ops(Subtraction, Division)
+      .nums(10, 20)
+      // .ops(RightAbs)
   }
 ];

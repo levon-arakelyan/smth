@@ -1,13 +1,20 @@
-import type { MuiColor } from '../../../../ui/colors';
-import { ExpressionMemberChoice } from './expression-member-choice';
+import type { JSX } from "@emotion/react/jsx-runtime";
+import type { MuiColor } from "../../../../../core/ui/colors";
+import React from "react";
+import { ExpressionMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/expression-member/ExpressionMemberView";
+import { ExpressionMemberChoice } from "./expression-member-choice";
 
 export abstract class ExpressionMember {
   public id: string = '';
   public choices: ExpressionMemberChoice[] = [];
   public choiceIndex: number;
-  public submember?: ExpressionMember;
+  public submembers: ExpressionMember[] = [];
+  public onChoiceUpdated?: (i: number) => void;
+
   public abstract color: MuiColor;
-  public abstract render(checkChoices?: boolean): string;
+  public abstract renderView(): JSX.Element;
+  public abstract renderMath(): string;
+  public abstract renderViewMath(): string;
 
   constructor (choices: ExpressionMemberChoice[]) {
     this.choices = choices;
@@ -22,68 +29,33 @@ export abstract class ExpressionMember {
     this.id = index.toString();
   }
 
-  public setSubmember(sub: ExpressionMember): void {
-    this.submember = sub;
+  public setSubmembers(subs: ExpressionMember[]): void {
+    this.submembers = subs;
   }
 
   public clone(): ExpressionMember {
     const Cls = this.constructor as new (choices: ExpressionMemberChoice[]) => ExpressionMember;
-    const cloned = new Cls(this.choices.map(c => new ExpressionMemberChoice(c.visualSymbol, c.calculationSymbol)));
+    const cloned = new Cls(this.choices.map(c => c.clone()));
     cloned.choiceIndex = this.choiceIndex;
     cloned.id = this.id;
-    if (this.submember) {
-      cloned.submember = this.submember.clone();
+    if (this.submembers?.length) {
+      cloned.submembers = this.submembers;
     }
     return cloned;
   }
-}
 
-export class ExpressionNumberMember extends ExpressionMember {
-  public color: MuiColor;
-
-  constructor(choices: ExpressionMemberChoice[]) {
-    super(choices);
-    this.color = 'success';
+  public renderBaseView(): JSX.Element {
+    return React.createElement(ExpressionMemberView, {
+      member: this,
+      onExpressionMemberSelected: (i: number) => this.setChoice(i, () => this.onChoiceUpdated?.(i))
+    });
   }
 
-  public render(checkChoices = false): string {
-    const { submember: sub, choice, choices } = this;
-    if (!sub) {
-      return choice.visualSymbol;
+  private setChoice(newChoice: number, onChanged: () => void): void {
+    if (this.choiceIndex === newChoice) {
+      return;
     }
-
-    if (!checkChoices && (sub.choices.length > 1 || choices.length > 1)) {
-      return choice.visualSymbol;
-    }
-
-    return `${choice.visualSymbol}^{${sub.render()}}`;
-  }
-
-}
-
-export class ExpressionPowerMember extends ExpressionMember {
-  public color: MuiColor;
-
-  constructor(choices: ExpressionMemberChoice[]) {
-    super(choices);
-    this.color = 'success';
-  }
-
-  public render(): string {
-    return this.choice.visualSymbol;
+    this.choiceIndex = newChoice
+    onChanged();
   }
 }
-
-export class ExpressionOperationMember extends ExpressionMember {
-  public color: MuiColor;
-
-  constructor(choices: ExpressionMemberChoice[]) {
-    super(choices);
-    this.color = 'info';
-  }
-
-  public render(): string {
-    return this.choice.visualSymbol;
-  }
-}
-
