@@ -1,7 +1,7 @@
 import { ExpressionMemberChoice } from "../expression-member-choice";
 
-export class Subtraction extends ExpressionMemberChoice {
+export class ParenthesisEnd extends ExpressionMemberChoice {
   constructor() {
-    super('~−~', '-', '−');
+    super('\\Large)', ')', ')');
   }
 }

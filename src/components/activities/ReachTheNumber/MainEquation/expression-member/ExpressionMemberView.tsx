@@ -35,7 +35,8 @@ export function ExpressionMemberView({ member, onExpressionMemberSelected }: Exp
         {member.choices.map((choice, i) => (
           <MenuItem key={`${member.id}-${i}`} onClick={() => onMenuItemClicked(i)}>
             <Button variant="contained" color={member.color}>
-              <Typography variant="h5">{choice.viewSymbol}</Typography>
+              <Typography variant="h5">
+                <Latex mathExpr={choice.historySymbol} /></Typography>
             </Button>
           </MenuItem>
         ))}

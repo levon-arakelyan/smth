@@ -14,12 +14,25 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
   });
 
   const renderMembers = () => {
-    return expression.full().map(member => {
+    const expr = expression.full();
+    return expr.map((member, i) => {
       member.onChoiceUpdated = () => {
         onExpressionMemberSelected();
       }
       member.submembers.forEach(m => m.onChoiceUpdated = () => onExpressionMemberSelected());
-      return <React.Fragment key={member.id}>{member.renderView()}</React.Fragment>;
+
+      const hasChoices = member.choices.length > 1;
+      const nextIsLatexWithSpace = expr[i + 1]?.choice.viewSymbol[0] == '~';
+      const prevIsLatexWithSpace = expr[i - 1]?.choice.viewSymbol[0] == '~';
+
+      return <React.Fragment key={member.id}>
+        <Box sx={{
+          marginLeft: !prevIsLatexWithSpace && hasChoices ? 2 : 0,
+          marginRight: !nextIsLatexWithSpace && hasChoices ? 2 : 0
+        }}>
+          {member.renderJSX()}
+        </Box>
+      </React.Fragment>;
     });
   }
 

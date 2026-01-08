@@ -1,9 +1,9 @@
 import type { JSX } from "@emotion/react/jsx-runtime";
 import type { MuiColor } from "../../../../ui/colors";
 import React from "react";
-import { ExpressionNumberMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/expression-number-member/ExpressionNumberMemberView";
 import { ExpressionMember } from "./expression-member";
 import type { ExpressionMemberChoice } from "./expression-member-choice";
+import { ExpressionNumberMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/expression-number-member/ExpressionNumberMemberView";
 
 export class ExpressionNumberMember extends ExpressionMember {
   public color: MuiColor;
@@ -13,7 +13,7 @@ export class ExpressionNumberMember extends ExpressionMember {
     this.color = 'success';
   }
 
-  public renderMath(): string {
+  public renderMathJS(): string {
     const { submembers, choice } = this;
     if (!submembers.length) {
       return choice.mathSymbol;
@@ -23,7 +23,7 @@ export class ExpressionNumberMember extends ExpressionMember {
     return `${choice.viewSymbol}^${power.choice.mathSymbol}`;
   }
 
-  public renderViewMath(): string {
+  public renderLatex(): string {
     const { submembers, choice } = this;
     if (!submembers.length) {
       return choice.mathSymbol;
@@ -33,7 +33,7 @@ export class ExpressionNumberMember extends ExpressionMember {
     return `${choice.viewSymbol}^{${power.choice.mathSymbol}}`;
   }
 
-  public renderView(): JSX.Element {
+  public renderJSX(): JSX.Element {
     return React.createElement(ExpressionNumberMemberView, { member: this });
   }
 }

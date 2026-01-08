@@ -3,6 +3,7 @@ import type { IHistoryStep } from "../../../../core/activities/ReachTheNumber/hi
 
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
+    width: '75%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -20,10 +21,9 @@ export const styles: Record<string, SxProps<Theme>> = {
     marginX: '-10px',
     paddingX: '4px',
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
+    flexDirection: 'column',
     gap: 1,
-    overflowY: 'auto',
-    overflowX: 'hidden',
+    overflow: 'auto',
     scrollBehavior: 'smooth',
     minHeight: 0,
     flexGrow: 1,
@@ -61,7 +61,7 @@ export const styles: Record<string, SxProps<Theme>> = {
   historyItemNumber: {
     position: 'absolute',
     top: 4,
-    left: 4
+    left: 8
   },
   historyItemText: {
     textAlign: 'center',
@@ -95,9 +95,12 @@ export const dynamicStyles: Record<string, ((...x: any) => SxProps<Theme>)> = {
   historyItemCard: (item: IHistoryStep) => ({
     position: 'relative',
     opacity: item.discarded ? 0.3 : 1,
-    overflow: 'hidden',
-    transition: 'transform 0.2s ease',
+    overflowX: 'auto',
+    borderRadius: 3,
+    transition: '0.2s ease',
     '&:hover': {
+      bgcolor: item.discarded ? 'initial' : 'rgba(229,115,115,0.5)',
+      cursor: item.discarded ? 'initial' : 'pointer',
       '& .remove-btn': {
         transform: 'translateY(0)',
         opacity: 1,

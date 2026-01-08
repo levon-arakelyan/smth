@@ -1,8 +1,11 @@
 import { ExpressionBuilder as Expr } from "../../../../core/activities/ReachTheNumber/expressions/expression-builder";
 import { Addition } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/addition";
 import { Division } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/division";
+import { Factorial } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/factorial";
 import { Multiplication } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/multiplication";
 import { Subtraction } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/subtraction";
+import { AbsEnd } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-wrapper-members/abs-end";
+import { AbsStart } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-wrapper-members/abs-start";
 
 export interface ILevel {
   start: number;
@@ -14,25 +17,34 @@ export const levels: ILevel[] = [
   {
     start: 1,
     goal: 19,
-    expr: Expr
+    expr: new Expr()
       .ops(Addition)
       .nums(4, 5)
   }, {
+    start: 10,
+    goal: 14,
+    expr: new Expr()
+      .ops(Division, Addition)
+      .nums(6, 8)
+  }, {
     start: 5,
     goal: 31,
-    expr: Expr
+    expr: new Expr()
       .ops(Addition, Subtraction)
       .nums(7, 10)
-  }, {
-    start: 8,
-    goal: 9,
-    expr: Expr
+  },
+  {
+    start: 1,
+    goal: 24,
+    expr: new Expr()
       .ops(Multiplication, Subtraction)
-      // .ops(LeftAbs)
-      .nums(2, 3)
-      .pows(2, 3)
-      .ops(Subtraction, Division)
-      .nums(10, 20)
-      // .ops(RightAbs)
-  }
+      .nums(12, 15)
+  },
+  // {
+  //   start: 8,
+  //   goal: 59,
+  //   expr: new Expr()
+  //     .ops(Addition, Division, Subtraction)
+  //     .nums(2, 3, 5)
+  // }
 ];

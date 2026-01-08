@@ -11,7 +11,7 @@ export function ExpressionNumberMemberView({member}: ExpressionMemberViewProps) 
   if (hasChoices && power && hasPowerChoices) {
     return <Box sx={styles.expressionMemberBox}>
       {member.renderBaseView()}
-      <Box sx={styles.submemberBox}>{power.renderView()}</Box>
+      <Box sx={styles.submemberBox}>{power.renderJSX()}</Box>
     </Box>
   }
 
@@ -25,12 +25,12 @@ export function ExpressionNumberMemberView({member}: ExpressionMemberViewProps) 
   if (!hasChoices && power && hasPowerChoices) {
     return <Box sx={styles.expressionMemberBox}>
       {member.choice.viewSymbol}
-      <Box sx={styles.submemberBox}>{power.renderView()}</Box>
+      <Box sx={styles.submemberBox}>{power.renderJSX()}</Box>
     </Box>
   }
 
   if (!hasChoices && power && !hasPowerChoices) {
-    return <Latex mathExpr={`${member.renderViewMath()}`} />
+    return <Latex mathExpr={`${member.renderLatex()}`} />
   }
 
   if (!hasChoices && !power) {

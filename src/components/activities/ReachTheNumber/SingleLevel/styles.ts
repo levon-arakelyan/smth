@@ -41,7 +41,7 @@ export const styles: Record<string, SxProps<Theme>> = {
   },
   goalText: {
     textAlign: 'center',
-    padding: 2
+    padding: 2,
   },
   gameBox: {
     width: '100%',
@@ -51,6 +51,6 @@ export const styles: Record<string, SxProps<Theme>> = {
     flexDirection: 'column',
     position: 'relative',
     justifyContent: 'space-between',
-    paddingX: '10%'
+    alignItems: 'center'
   }
 }

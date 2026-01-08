@@ -8,7 +8,7 @@ import type { EquationsHistoryProps } from '../../../../core/activities/ReachThe
 import { WarningTooltip } from '../WarningTooltip/WarningTooltip';
 import { styles, dynamicStyles } from './styles';
 import { useEffect, useRef } from 'react';
-import { MathJax } from 'better-react-mathjax';
+import { Latex } from '../Latex.tsx/Latex';
 
 export function EquationsHistory({history, onClearClicked, onRevertClicked, onRemoveFromThisStepClicked, onUndoClicked}: EquationsHistoryProps) {
   const { t } = useTranslation();
@@ -29,9 +29,10 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
           key={i}
           variant="outlined"
           sx={dynamicStyles.historyItemCard(item)}
+          onClick={() => onRemoveFromThisStepClicked(i)}
         >
           {!item.discarded && (
-            <IconButton className='remove-btn' sx={styles.removeIconContainerBtn} onClick={() => onRemoveFromThisStepClicked(i)}>
+            <IconButton className='remove-btn' sx={styles.removeIconContainerBtn}>
               <HighlightOffIcon color="error"/>
             </IconButton>
           )}
@@ -40,7 +41,7 @@ export function EquationsHistory({history, onClearClicked, onRevertClicked, onRe
               {i + 1}
             </Typography>
             <Typography variant="h5" sx={styles.historyItemText}>
-              <MathJax>{item.expr.render()}</MathJax>
+              <Latex mathExpr={item.renderedExpr} />
             </Typography>
           </CardContent>
         </Card>

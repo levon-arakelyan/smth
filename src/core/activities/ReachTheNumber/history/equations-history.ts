@@ -10,7 +10,7 @@ export class History {
 
   public insert(expr: Expression): void {
     this.steps = this.steps.filter(x => !x.discarded);
-    this.steps.push({expr, discarded: false});
+    this.steps.push({expr, renderedExpr: expr.renderHistory(), discarded: false});
   }
 
   public clear(onCleared: () => void): void {
@@ -64,7 +64,8 @@ export class History {
     const newHistory = new History();
     newHistory.steps = this.steps.map(x => ({
       discarded: x.discarded,
-      expr: x.expr
+      expr: x.expr,
+      renderedExpr: x.renderedExpr
     }));
     return newHistory;
   }

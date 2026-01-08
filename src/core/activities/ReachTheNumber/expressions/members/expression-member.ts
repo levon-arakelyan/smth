@@ -5,16 +5,14 @@ import { ExpressionMemberView } from "../../../../../components/activities/Reach
 import { ExpressionMemberChoice } from "./expression-member-choice";
 
 export abstract class ExpressionMember {
-  public id: string = '';
+  public id: number = 0;
   public choices: ExpressionMemberChoice[] = [];
   public choiceIndex: number;
   public submembers: ExpressionMember[] = [];
   public onChoiceUpdated?: (i: number) => void;
 
-  public abstract color: MuiColor;
-  public abstract renderView(): JSX.Element;
-  public abstract renderMath(): string;
-  public abstract renderViewMath(): string;
+  public abstract color?: MuiColor;
+  public abstract renderJSX(): JSX.Element;
 
   constructor (choices: ExpressionMemberChoice[]) {
     this.choices = choices;
@@ -26,7 +24,7 @@ export abstract class ExpressionMember {
   }
 
   public setId(index: number) {
-    this.id = index.toString();
+    this.id = index;
   }
 
   public setSubmembers(subs: ExpressionMember[]): void {
@@ -39,9 +37,21 @@ export abstract class ExpressionMember {
     cloned.choiceIndex = this.choiceIndex;
     cloned.id = this.id;
     if (this.submembers?.length) {
-      cloned.submembers = this.submembers;
+      cloned.submembers = this.submembers.map(x => x.clone());
     }
     return cloned;
+  }
+
+  public renderMathJS(): string {
+    return this.choice.mathSymbol;
+  }
+
+  public renderLatex(): string {
+    return this.choice.viewSymbol;
+  }
+
+  public renderHistoryLatex(): string {
+    return this.choice.historySymbol;
   }
 
   public renderBaseView(): JSX.Element {
