@@ -1,0 +1,5 @@
+Make lnaugage selector responsive
+Add scrollbar for main equation in mobile devices (or decide better way to show equation)
+Improve translations
+Store current level in local storage more securely
+Add ability to select level

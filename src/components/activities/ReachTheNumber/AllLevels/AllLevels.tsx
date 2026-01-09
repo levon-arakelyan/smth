@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { ReachTheNumberLevel } from "../SingleLevel/SingleLevel";
 import { levels } from "./levels";
 import { LocalStorageService } from "../../../../core/services/local-storage/local-storage";
 import { LocalStorageKey } from "../../../../core/services/local-storage/local-storage-keys";
 import { MathJaxContext } from "better-react-mathjax";
+import { CurrentLevel } from "../CurrentLevel/CurrentLevel";
 
-export function ReachTheNumberAllLevels() {
+export function ReachTheNumber() {
   const loadLevel = (): number => {
     const saved = LocalStorageService.get<{ data: string; checksum: string }>(LocalStorageKey.ReachTheNumber);
     if (!saved) return 0;
@@ -38,7 +38,7 @@ export function ReachTheNumberAllLevels() {
   const allLevels = levels.map(l => ({...l, expr: l.expr.build()}));
   const currentLevel = allLevels[levelIndex];
   return <MathJaxContext>
-    <ReachTheNumberLevel
+    <CurrentLevel
       key={levelIndex}
       start={currentLevel.start}
       goal={currentLevel.goal}

@@ -2,12 +2,17 @@ import type { Expression } from "./expressions/expression";
 import type { ExpressionMember } from "./expressions/members/expression-member";
 import type { History } from "./history/equations-history";
 
-export type ReachTheNumberLevelProps = {
+export type CurrentLevelProps = {
   start: number;
   members: ExpressionMember[];
   goal: number;
   level: number;
   onLevelCompleted?: () => void;
+}
+
+export type LevelHeaderProps = {
+  goal: number;
+  level: number;
 }
 
 export type MainEquationProps = {

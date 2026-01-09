@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import type { MainEquationProps } from "../../../../core/activities/ReachTheNumber/props";
 import { WarningTooltip } from "../WarningTooltip/WarningTooltip";
 import { styles } from "./styles";
-import { useExpressionResult } from "./expression-result/ExpressionResult";
 import React from "react";
+import { useExpressionResult } from "./ExpressionResult";
 
 export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionMemberSelected, onSubmitted}: MainEquationProps) {
   const { t } = useTranslation();

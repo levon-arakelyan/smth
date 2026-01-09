@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
-import type { ExpressionMemberViewProps } from "../../../../../core/activities/ReachTheNumber/props";
-import { Latex } from "../../Latex.tsx/Latex";
-import { styles } from "../styles";
+import type { ExpressionMemberViewProps } from "../../../../core/activities/ReachTheNumber/props";
+import { styles } from "./styles";
+import { Latex } from "../Latex.tsx/Latex";
 
 export function ExpressionNumberMemberView({member}: ExpressionMemberViewProps) {
   const power = member.submembers[0];

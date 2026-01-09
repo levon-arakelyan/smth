@@ -1,25 +1,31 @@
 import type { SxProps, Theme } from "@mui/material";
+import { mainVisibleBox } from "../shared-styles";
 
 const latexFontSize: number = 32;
 const expressionMemberBoxWidth = 64;
+const resultIconFontSize = 2;
+const expressionMemberBtnShadow = '0px 3px 5px 0px rgba(0,0,0,0.1);';
 
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
     width: '100%',
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.04)',
-    bgcolor: 'background.paper',
-    padding: 2,
+    boxShadow: mainVisibleBox.boxShadow,
+    bgcolor: mainVisibleBox.backgroundColor,
+    padding: mainVisibleBox.padding,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: mainVisibleBox.padding
   },
   equationBox: {
     display: 'flex',
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 2,
+    position: 'relative',
+    justifyContent: 'center'
   },
   equationSubBox: {
     fontSize: `${latexFontSize}px`,
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   expressionMemberBox: {
     position: 'relative'
@@ -28,7 +34,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     ['&:disabled']: {
       color: '#646e8f'
     },
-    boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
+    boxShadow: expressionMemberBtnShadow,
     position: 'relative',
     width: `${expressionMemberBoxWidth}px`,
     '& p': {
@@ -54,7 +60,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     position: 'relative'
   },
   expressionReultBtn: {
-    boxShadow: '0px 3px 5px 0px rgba(0,0,0,0.1);',
+    boxShadow: expressionMemberBtnShadow,
     position: 'relative',
     minWidth: `${expressionMemberBoxWidth}px`,
   },
@@ -63,11 +69,11 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
   },
   expressionReultBtnIcon: {
-    fontSize: '2rem',
+    fontSize: `${resultIconFontSize}rem`,
   },
   expressionReultBtnNegInfinity: {
     marginLeft: 1,
-    fontSize: '2rem'
+    fontSize: `${resultIconFontSize}rem`
   },
   nextBtnBox: {
     display: 'flex',

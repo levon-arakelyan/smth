@@ -1,11 +1,8 @@
 import { ExpressionBuilder as Expr } from "../../../../core/activities/ReachTheNumber/expressions/expression-builder";
 import { Addition } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/addition";
 import { Division } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/division";
-import { Factorial } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/factorial";
 import { Multiplication } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/multiplication";
 import { Subtraction } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-operation-members/subtraction";
-import { AbsEnd } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-wrapper-members/abs-end";
-import { AbsStart } from "../../../../core/activities/ReachTheNumber/expressions/members/expression-wrapper-members/abs-start";
 
 export interface ILevel {
   start: number;

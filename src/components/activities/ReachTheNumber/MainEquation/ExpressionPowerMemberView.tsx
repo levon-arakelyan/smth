@@ -1,5 +1,5 @@
-import type { ExpressionMemberViewProps } from "../../../../../core/activities/ReachTheNumber/props";
-import { Latex } from "../../Latex.tsx/Latex";
+import type { ExpressionMemberViewProps } from "../../../../core/activities/ReachTheNumber/props";
+import { Latex } from "../Latex.tsx/Latex";
 
 export function ExpressionPowerMemberView({ member }: ExpressionMemberViewProps) {
   return member.choices.length <= 1 ?

@@ -1,36 +1,39 @@
 import type { SxProps, Theme } from "@mui/material";
 import type { IHistoryStep } from "../../../../core/activities/ReachTheNumber/history/ihistory-step";
+import { mainVisibleBox } from "../shared-styles";
+
+const scrollbarWidth = 6;
+
+const boxPadding = mainVisibleBox.padding * 8;
+const historyBoxPadding = (boxPadding - scrollbarWidth) / 2;
+const historyBoxMargin = boxPadding - historyBoxPadding;
+const actionBtnWidth = {xs: '100%', sm: 'auto'};
 
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
-    width: '75%',
+    ...mainVisibleBox,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     flexGrow: 1,
     minHeight: 0,
-    borderRadius: 6,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    boxShadow: '0 2px 4px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.06), 0 16px 32px rgba(0,0,0,0.04)',
-    bgcolor: 'background.paper',
-    padding: 2,
-    marginTop: 2,
   },
   historyContainerBox: {
-    marginX: '-10px',
-    paddingX: '4px',
+    marginX: `-${historyBoxMargin}px`,
+    paddingX: `${historyBoxPadding}px`,
     display: 'grid',
     flexDirection: 'column',
     gap: 1,
     overflow: 'auto',
     scrollBehavior: 'smooth',
-    minHeight: 0,
     flexGrow: 1,
+    height: 0,
     gridAutoRows: 'min-content',
     scrollbarGutter: 'stable both-edges',
     '&::-webkit-scrollbar': {
-      width: '6px',
+      width: `${scrollbarWidth}px`,
     },
     '&::-webkit-scrollbar-thumb': {
       background: 'transparent',
@@ -71,16 +74,28 @@ export const styles: Record<string, SxProps<Theme>> = {
   actionsContainerBox: {
     width: '100%',
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: { xs: 'end', sm: 'start' },
     paddingTop: 2,
-    flexShrink: 0
+    flexShrink: 0,
+    '& > div': {
+      display: { xs: 'none', sm: 'flex' },
+    }
+  },
+  actionOnBigScreen: {
+    width: '100%',
+    justifyContent: 'space-between',
+    gap: 1
   },
   mainActionsBox: {
-    display: 'flex',
-    gap: 1
+    gap: 1,
+    display: 'flex'
+  },
+  actionBtn: {
+    width: actionBtnWidth
   },
   undoBtn: {
     position: 'relative',
+    width: actionBtnWidth
   },
   actionBtnText: {
     display: 'flex',
@@ -88,6 +103,26 @@ export const styles: Record<string, SxProps<Theme>> = {
   },
   actionBtnIcon: {
     marginRight: 1
+  },
+  actionsMenu: {
+    width: '100%',
+    display: {xs: 'flex', sm: 'none'}
+  },
+  actionsMenuArrow: {
+    mt: -1,
+    overflow: 'visible',
+    '&::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      width: 10,
+      height: 10,
+      bgcolor: 'background.paper',
+      top: 'calc(100% - 5px)',
+      left: '50%',
+      transform: 'rotate(45deg)',
+      zIndex: 0,
+    },
   }
 };
 
@@ -96,7 +131,7 @@ export const dynamicStyles: Record<string, ((...x: any) => SxProps<Theme>)> = {
     position: 'relative',
     opacity: item.discarded ? 0.3 : 1,
     overflowX: 'auto',
-    borderRadius: 3,
+    borderRadius: mainVisibleBox.borderRadius / 2,
     transition: '0.2s ease',
     '&:hover': {
       bgcolor: item.discarded ? 'initial' : 'rgba(229,115,115,0.5)',

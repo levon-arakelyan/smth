@@ -3,7 +3,7 @@ import type { MuiColor } from "../../../../ui/colors";
 import React from "react";
 import { ExpressionMember } from "./expression-member";
 import type { ExpressionMemberChoice } from "./expression-member-choice";
-import { ExpressionNumberMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/expression-number-member/ExpressionNumberMemberView";
+import { ExpressionNumberMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/ExpressionNumberMemberView";
 
 export class ExpressionNumberMember extends ExpressionMember {
   public color: MuiColor;

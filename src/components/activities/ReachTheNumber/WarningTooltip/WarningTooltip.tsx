@@ -3,7 +3,7 @@ import type { WarningTooltipProps } from '../../../../core/activities/ReachTheNu
 import { ArrowedTooltip, styles } from './styles';
 
 export function WarningTooltip({text}: WarningTooltipProps) {
-  return <ArrowedTooltip title={`${text}`} placement='top-start'>
+  return <ArrowedTooltip title={`${text}`} placement='top-start' enterTouchDelay={0} leaveTouchDelay={3000}>
     <ErrorIcon color='error' sx={styles.icon}/>
   </ArrowedTooltip>
 }

@@ -1,4 +1,5 @@
 import {Tooltip, styled, tooltipClasses, type SxProps, type Theme, type TooltipProps } from "@mui/material";
+import { mainVisibleBox } from "../shared-styles";
 
 export const ArrowedTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />
@@ -18,6 +19,6 @@ export const styles: Record<string, SxProps<Theme>> = {
     right: 0,
     transform: 'translate(50%, -50%)',
     borderRadius: '50%',
-    background: 'white'
+    backgroundColor: mainVisibleBox.backgroundColor
   }
 }

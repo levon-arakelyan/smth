@@ -1,7 +1,7 @@
 import type { JSX } from "@emotion/react/jsx-runtime";
 import type { MuiColor } from "../../../../../core/ui/colors";
 import React from "react";
-import { ExpressionMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/expression-member/ExpressionMemberView";
+import { ExpressionMemberView } from "../../../../../components/activities/ReachTheNumber/MainEquation/ExpressionMemberView";
 import { ExpressionMemberChoice } from "./expression-member-choice";
 
 export abstract class ExpressionMember {

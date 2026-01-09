@@ -1,17 +1,15 @@
-import { Box, Typography } from '@mui/material';
+import { Box, createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Expression } from '../../../../core/activities/ReachTheNumber/expressions/expression';
-import type { ReachTheNumberLevelProps } from '../../../../core/activities/ReachTheNumber/props';
 import { History } from '../../../../core/activities/ReachTheNumber/history/equations-history';
 import { MainEquation } from '../MainEquation/MainEquation';
 import { EquationsHistory } from '../EquationsHistory/EquationsHistory';
 import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
+import type { CurrentLevelProps } from '../../../../core/activities/ReachTheNumber/props';
+import { LevelHeader } from '../LevelHeader/LevelHeader';
 
-export function ReachTheNumberLevel({start, members, goal, level, onLevelCompleted}: ReachTheNumberLevelProps) {
-  const { t } = useTranslation();
-
+export function CurrentLevel({start, members, goal, level, onLevelCompleted}: CurrentLevelProps) {
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
@@ -78,34 +76,30 @@ export function ReachTheNumberLevel({start, members, goal, level, onLevelComplet
     setHistory(history.new())
   }
 
-  return <>
+  const theme = responsiveFontSizes(createTheme());
+  return <ThemeProvider theme={theme}>
     <VictoryModal open={victory} goal={goal} onNextLevelClicked={toNextLevel}/>
     <Box sx={styles.mainBox}>
       <Box sx={styles.playgroundBox}>
-        <Box sx={styles.levelContainerBox}>
-          <Typography variant='h2' sx={styles.levelText}>
-            {t('level')} {level}
-          </Typography>
-          <Typography variant='h4' sx={styles.goalText}>🏅{t('goal')}: {goal}</Typography>
-        </Box>
-        <Box sx={styles.gameBox}>
-          <MainEquation
-            expression={expression}
-            historyStepsDiscarded={showTooltip}
-            currentResult={currentResult}
-            onExpressionMemberSelected={onExpressionMemberSelected}
-            onSubmitted={calculate}
-          />
-
-          <EquationsHistory
-            history={history}
-            onClearClicked={onHistoryCleared}
-            onRevertClicked={onHistoryReverted}
-            onRemoveFromThisStepClicked={onHistoryStepsDiscarded}
-            onUndoClicked={onHistoryStepUndid}
-          />
-        </Box>
+        <LevelHeader
+          goal={goal}
+          level={level}
+        />
+        <MainEquation
+          expression={expression}
+          historyStepsDiscarded={showTooltip}
+          currentResult={currentResult}
+          onExpressionMemberSelected={onExpressionMemberSelected}
+          onSubmitted={calculate}
+        />
+        <EquationsHistory
+          history={history}
+          onClearClicked={onHistoryCleared}
+          onRevertClicked={onHistoryReverted}
+          onRemoveFromThisStepClicked={onHistoryStepsDiscarded}
+          onUndoClicked={onHistoryStepUndid}
+        />
       </Box>
     </Box>
-  </>
+  </ThemeProvider>
 }

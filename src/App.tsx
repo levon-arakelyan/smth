@@ -1,13 +1,13 @@
 import { LanguageSwitcher } from './components/main/LanguageSwitcher/LanguageSwitcher';
 import { CssBaseline } from '@mui/material';
-import { ReachTheNumberAllLevels } from './components/activities/ReachTheNumber/AllLevels/AllLevels';
+import { ReachTheNumber } from './components/activities/ReachTheNumber/AllLevels/AllLevels';
 
 function App() {
   return (
     <>
       <CssBaseline />
       <LanguageSwitcher />
-      <ReachTheNumberAllLevels />
+      <ReachTheNumber />
     </>
   )
 }

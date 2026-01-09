@@ -22,7 +22,8 @@ i18n.use(initReactI18next).init({
         calcError: 'Calculation error',
         tooBigRes: 'The result is too big',
         tooSmallRes: 'The result is too small',
-        divResNoInt: 'Division result must be an integer'
+        divResNoInt: 'Division result must be an integer',
+        actions: 'Actions'
       },
     },
     ru: {
@@ -42,7 +43,8 @@ i18n.use(initReactI18next).init({
         calcError: 'Ошибка вычисления',
         tooBigRes: 'Результат слишком большой',
         tooSmallRes: 'Ресультат слишком маленький',
-        divResNoInt: 'Результатом деления должно быть целое число'
+        divResNoInt: 'Результатом деления должно быть целое число',
+        actions: 'Действия'
       }
     }
   },
