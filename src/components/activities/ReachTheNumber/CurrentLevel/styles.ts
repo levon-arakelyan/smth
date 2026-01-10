@@ -1,6 +1,6 @@
 import { keyframes } from "@emotion/react";
 import type { SxProps, Theme } from "@mui/material";
-import { mainVisibleBox } from "../shared-styles";
+import { mainVisibleBox } from "../../../../core/main/shared-styles";
 
 const bgAnimation = keyframes`
   0% { background-position: 0% 50%; }
@@ -28,6 +28,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: mainVisibleBox.padding
+    gap: mainVisibleBox.padding,
+    position: 'relative'
   }
 }

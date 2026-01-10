@@ -14,6 +14,9 @@ export interface IHandledResult {
 export class Expression {
   public start: ExpressionNumberMember;
   private _end: ExpressionOperationMember;
+  public get end(): ExpressionMember {
+    return this._end;
+  }
   private _members: ExpressionMember[] = [];
   public get members(): ExpressionMember[] {
     return this._members;

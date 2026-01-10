@@ -14,7 +14,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
   });
 
   const renderMembers = () => {
-    const expr = expression.full();
+    const expr = [...expression.members, expression.end];
     return expr.map((member, i) => {
       member.onChoiceUpdated = () => {
         onExpressionMemberSelected();
@@ -38,6 +38,13 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
 
   return <Box sx={styles.mainBox}>
     <Box sx={styles.equationBox}>
+      <Box sx={styles.expressionResultBox}>
+        <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
+          <Typography sx={styles.expressionReultBtnText}>
+            {expression.start.renderJSX()}
+          </Typography>
+        </Button>
+      </Box>
       <Box sx={styles.equationSubBox}>
         {renderMembers()}
       </Box>

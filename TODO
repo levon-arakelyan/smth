@@ -1,5 +1,15 @@
-Make lnaugage selector responsive
+Multiple results for same equation (sub-levels)
+Add ability for players to create own levels
+Add inequations
+
 Add scrollbar for main equation in mobile devices (or decide better way to show equation)
-Improve translations
-Store current level in local storage more securely
-Add ability to select level
++Make lnaugage selector responsive
++Improve translations
++Add ability to select level
++Store current level in local storage more securely
++Start number - styling same as result
+Show something when player completes all levels
+Victory sound
+Add author solution steps count
+Show operation symbols in history with spaces from start and end
+Create more levels

@@ -4,8 +4,9 @@ export class LocalStorageService {
   private static storage: Storage = localStorage;
 
   public static set<T>(key: LocalStorageKey, value: T): void {
+    console.log(value)
     try {
-      this.storage.setItem(key, JSON.stringify(value));
+      this.storage.setItem(key, btoa(JSON.stringify(value)));
     } catch (error) {
       console.error('LocalStorageService.set error:', error);
     }
@@ -14,7 +15,7 @@ export class LocalStorageService {
   public static get<T = string>(key: LocalStorageKey): T | null {
     try {
       const item = this.storage.getItem(key);
-      return item ? JSON.parse(item) as T : null;
+      return item ? JSON.parse(atob(item)) as T : null;
     } catch (error) {
       console.error('LocalStorageService.get error:', error);
       return null;

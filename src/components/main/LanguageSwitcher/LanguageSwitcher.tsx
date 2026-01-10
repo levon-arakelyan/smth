@@ -1,47 +1,51 @@
-import { Box, Card, CardActionArea, Menu, MenuItem, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, MenuItem, MenuList, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
 import { LocalStorageService } from "../../../core/services/local-storage/local-storage";
 import { LocalStorageKey } from "../../../core/services/local-storage/local-storage-keys";
+import type { LanguageSwitcherProps } from "../../../core/main/props";
+import CheckIcon from '@mui/icons-material/Check';
+import { FadeModal } from "../FadeModal/FadeModal";
+import { defaultLanguage, Language, languageFlagUrl, languagesMap } from "../../../i18n";
+import { useEffect } from "react";
 
-const languages: Map<string, string> = new Map<string, string>([
-  ['gb', 'English'],
-  ['ru', 'Русский']
-]);
-
-export function LanguageSwitcher() {
+export function LanguageSwitcher({open, onLanguageSelected}: LanguageSwitcherProps) {
   const { i18n } = useTranslation();
-  const [anchor, setAnchor] = useState<HTMLElement | null>(null);
 
-  const changeLanguage = (lng: string) => {
+  useEffect(() => {
+    if (!LocalStorageService.get(LocalStorageKey.Language)) {
+      changeLanguage(defaultLanguage);
+    }
+  }, []);
+
+  const changeLanguage = (lng: Language) => {
     i18n.changeLanguage(lng);
     LocalStorageService.set(LocalStorageKey.Language, lng);
-    setAnchor(null);
+    onLanguageSelected();
   };
 
-  const languageOption = (code: string) => {
-    return <Box sx={styles.languageOptionBox}>
-      <Box sx={styles.flagBox}>
-        <img src={`https://flagcdn.com/${code}.svg`} width={24} />
+  const languageOption = (lng: Language) => {
+    return <Box sx={styles.languageMainBox}>
+      <Box sx={styles.languageOptionBox}>
+        <Box sx={styles.flagBox}>
+          <img src={languageFlagUrl(lng)} width={28} />
+        </Box>
+        <Typography variant='h6' sx={styles.countryCodeText}>{languagesMap.get(lng)}</Typography>
       </Box>
-      <Typography sx={styles.countryCodeText}>{languages.get(code)}</Typography>
+      {LocalStorageService.get(LocalStorageKey.Language) == lng && <CheckIcon fontSize="large" color='success' />}
     </Box>
   }
 
-  return <Box sx={styles.mainBox}>
-    <Card onClick={(e) => setAnchor(e.currentTarget)} sx={styles.languageCard}>
-      <CardActionArea>
-      {languageOption(i18n.language)}
-      </CardActionArea>
-    </Card>
-    <Menu anchorEl={anchor} open={!!anchor} onClose={() => setAnchor(null)}>
-      <MenuItem onClick={() => changeLanguage('gb')}>
-        {languageOption('gb')}
-      </MenuItem>
-      <MenuItem onClick={() => changeLanguage('ru')}>
-        {languageOption('ru')}
-      </MenuItem>
-    </Menu>
-  </Box>;
+  return <FadeModal open={open} onClose={onLanguageSelected}>
+    <Box sx={styles.mainBox}>
+      <MenuList>
+        <MenuItem onClick={() => changeLanguage(Language.English)}>
+          {languageOption(Language.English)}
+        </MenuItem>
+        <MenuItem onClick={() => changeLanguage(Language.Russian)}>
+          {languageOption(Language.Russian)}
+        </MenuItem>
+      </MenuList>
+    </Box>
+  </FadeModal>
 }

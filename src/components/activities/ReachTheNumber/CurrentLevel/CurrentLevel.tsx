@@ -8,8 +8,11 @@ import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
 import type { CurrentLevelProps } from '../../../../core/activities/ReachTheNumber/props';
 import { LevelHeader } from '../LevelHeader/LevelHeader';
+import { MainMenu } from '../MainMenu/MainMenu';
+import { useLevel } from '../../../../core/activities/ReachTheNumber/hooks/useLevel';
 
-export function CurrentLevel({start, members, goal, level, onLevelCompleted}: CurrentLevelProps) {
+export function CurrentLevel({start, members, goal, level, onLevelSelected}: CurrentLevelProps) {
+  const { currentLevelIndex } = useLevel();
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
@@ -34,9 +37,7 @@ export function CurrentLevel({start, members, goal, level, onLevelCompleted}: Cu
 
   const toNextLevel = (): void => {
     setVictory(false);
-    if (onLevelCompleted) {
-      onLevelCompleted();
-    }
+    onLevelSelected(currentLevelIndex + 1);
   }
 
   const onHistoryCleared = () => {
@@ -81,6 +82,9 @@ export function CurrentLevel({start, members, goal, level, onLevelCompleted}: Cu
     <VictoryModal open={victory} goal={goal} onNextLevelClicked={toNextLevel}/>
     <Box sx={styles.mainBox}>
       <Box sx={styles.playgroundBox}>
+        <Box sx={{position: 'absolute', top: 0, right: 0}}>
+          <MainMenu onLevelSelected={(i) => onLevelSelected(i)}/>
+        </Box>
         <LevelHeader
           goal={goal}
           level={level}

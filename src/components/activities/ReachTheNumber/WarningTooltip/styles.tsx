@@ -1,5 +1,5 @@
 import {Tooltip, styled, tooltipClasses, type SxProps, type Theme, type TooltipProps } from "@mui/material";
-import { mainVisibleBox } from "../shared-styles";
+import { mainVisibleBox } from "../../../../core/main/shared-styles";
 
 export const ArrowedTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} arrow classes={{ popper: className }} />

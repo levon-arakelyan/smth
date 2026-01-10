@@ -3,27 +3,44 @@ import { initReactI18next } from 'react-i18next';
 import { LocalStorageService } from './core/services/local-storage/local-storage';
 import { LocalStorageKey } from './core/services/local-storage/local-storage-keys';
 
+export enum Language {
+  English = 'gb',
+  Russian = 'ru'
+}
+
+export const languagesMap: Map<string, string> = new Map<string, string>([
+  [Language.English, 'English'],
+  [Language.Russian, 'Русский']
+]);
+
+export const defaultLanguage = Language.English;
+
+export const languageFlagUrl = (lang: Language) => `https://flagcdn.com/${lang}.svg`
+
 i18n.use(initReactI18next).init({
   resources: {
     gb: {
       translation: {
         level: 'LEVEL',
-        goal: 'Goal',
+        goal: 'Target',
         next: 'Confirm',
         clear: 'Restart',
         back: 'Undo',
-        bringBack: 'Bring back',
+        bringBack: 'Restore',
         removeAllFaded: 'This action will remove all faded equations',
-        lastNonFaded: ', as well as last non-faded one',
-        addNewOne: ' and add new one',
+        lastNonFaded: ', as well as the last visible one',
+        addNewOne: ', and create a new equation',
         victory: 'Victory!',
-        userReachedNumber: 'You have successfully reached the number {{number}}!',
+        userReachedNumber: 'You successfully reached {{number}}!',
         nextLevel: 'Next level',
         calcError: 'Calculation error',
-        tooBigRes: 'The result is too big',
+        tooBigRes: 'The result is too large',
         tooSmallRes: 'The result is too small',
         divResNoInt: 'Division result must be an integer',
-        actions: 'Actions'
+        actions: 'Actions',
+        levels: 'All levels',
+        selectLang: 'Select language',
+        selectLvl: 'Select level',
       },
     },
     ru: {
@@ -31,25 +48,28 @@ i18n.use(initReactI18next).init({
         level: 'УРОВЕНЬ',
         goal: 'Цель',
         next: 'Подтвердить',
-        clear: 'Перезапуск',
-        back: 'Назад',
-        bringBack: 'Вернуть',
-        removeAllFaded: 'Это действие удалит не только все затускневшие равенства',
-        lastNonFaded: ', но и последнее не затускневшее',
-        addNewOne: ', но и создаст новое равенство',
+        clear: 'Заново',
+        back: 'Отменить',
+        bringBack: 'Восстановить',
+        removeAllFaded: 'Это действие удалит все затускневшие уравнения',
+        lastNonFaded: ', а также последнее видимое уравнение',
+        addNewOne: ', и создаст новое уравнение',
         victory: 'Победа!',
-        userReachedNumber: 'Ты успешно дошёл до числа {{number}}!',
+        userReachedNumber: 'Ты успешно достиг числа {{number}}!',
         nextLevel: 'Следующий уровень',
         calcError: 'Ошибка вычисления',
         tooBigRes: 'Результат слишком большой',
-        tooSmallRes: 'Ресультат слишком маленький',
-        divResNoInt: 'Результатом деления должно быть целое число',
-        actions: 'Действия'
-      }
-    }
+        tooSmallRes: 'Результат слишком маленький',
+        divResNoInt: 'Результат деления должен быть целым числом',
+        actions: 'Действия',
+        levels: 'Все уровни',
+        selectLang: 'Выбрать язык',
+        selectLvl: 'Выбрать уровень',
+      },
+    },
   },
-  lng: LocalStorageService.get(LocalStorageKey.Language) ?? 'gb',
-  fallbackLng: 'gb',
+  lng: LocalStorageService.get(LocalStorageKey.Language) ?? defaultLanguage,
+  fallbackLng: defaultLanguage,
   interpolation: {
     escapeValue: false,
   },

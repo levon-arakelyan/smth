@@ -1,50 +1,28 @@
-import { useState } from "react";
-import { levels } from "./levels";
-import { LocalStorageService } from "../../../../core/services/local-storage/local-storage";
-import { LocalStorageKey } from "../../../../core/services/local-storage/local-storage-keys";
+import { levels } from "../../../../core/activities/ReachTheNumber/levels";
 import { MathJaxContext } from "better-react-mathjax";
 import { CurrentLevel } from "../CurrentLevel/CurrentLevel";
+import { useLevel } from "../../../../core/activities/ReachTheNumber/hooks/useLevel";
 
 export function ReachTheNumber() {
-  const loadLevel = (): number => {
-    const saved = LocalStorageService.get<{ data: string; checksum: string }>(LocalStorageKey.ReachTheNumber);
-    if (!saved) return 0;
-
-    const { data, checksum } = saved;
-    if (btoa(data).slice(0, 5) !== checksum) return 1;
-
-    try {
-      const parsed = JSON.parse(data);
-      return parsed.level ?? 0;
-    } catch {
-      return 0;
+  const { currentLevelIndex, saveLevel } = useLevel();
+  const onLevelSelected = (levelIndex: number | null) => {
+    if (levelIndex == null) {
+      return;
     }
-  };
-
-  const saveLevel = (level: number) => {
-    const data = JSON.stringify({ level });
-    const checksum = btoa(data).slice(0, 5);
-    LocalStorageService.set(LocalStorageKey.ReachTheNumber, { data, checksum });
-  };
-
-  const [levelIndex, setLevelIndex] = useState<number>(loadLevel());
-
-  const onLevelCompleted = () => {
-    const newLevel = levelIndex === levels.length - 1 ? 0 : levelIndex + 1;
-    setLevelIndex(newLevel);
-    saveLevel(newLevel);
+    saveLevel(levelIndex)
   };
 
   const allLevels = levels.map(l => ({...l, expr: l.expr.build()}));
-  const currentLevel = allLevels[levelIndex];
+  const level = allLevels[currentLevelIndex];
+
   return <MathJaxContext>
     <CurrentLevel
-      key={levelIndex}
-      start={currentLevel.start}
-      goal={currentLevel.goal}
-      level={levelIndex + 1}
-      members={currentLevel.expr}
-      onLevelCompleted={onLevelCompleted}
+      key={level.N}
+      start={level.start}
+      goal={level.goal}
+      level={level.N}
+      members={level.expr}
+      onLevelSelected={onLevelSelected}
     />
   </MathJaxContext>;
 }

@@ -1,5 +1,5 @@
 import type { SxProps, Theme } from "@mui/material";
-import { mainVisibleBox } from "../shared-styles";
+import { mainVisibleBox } from "../../../../core/main/shared-styles";
 
 const latexFontSize: number = 32;
 const expressionMemberBoxWidth = 64;
@@ -40,6 +40,9 @@ export const styles: Record<string, SxProps<Theme>> = {
     '& p': {
       fontSize: `${latexFontSize}px`,
     },
+  },
+  expressionMemberChoiceBtn: {
+    width: '100%',
   },
   expressionMemberBtnDropdownIcon: {
     position: 'absolute',

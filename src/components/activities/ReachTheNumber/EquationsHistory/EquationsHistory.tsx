@@ -10,16 +10,12 @@ import { styles, dynamicStyles } from './styles';
 import { useEffect, useRef } from 'react';
 import { Latex } from '../Latex.tsx/Latex';
 import { useMenuAnchor } from '../../../../hooks/useMenuAnchor';
-import MenuIcon from '@mui/icons-material/Menu';
 
 export function EquationsHistory({history, onClearClicked, onRevertClicked, onRemoveFromThisStepClicked, onUndoClicked}: EquationsHistoryProps) {
   const { t } = useTranslation();
   const { anchorEl, openMenu, closeMenu, isOpen } = useMenuAnchor();
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     const el = containerRef.current;

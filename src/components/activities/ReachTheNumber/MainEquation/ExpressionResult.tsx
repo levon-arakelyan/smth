@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import type { JSX } from "@emotion/react/jsx-runtime";
 import type { IHandledResult } from "../../../../core/activities/ReachTheNumber/expressions/expression";
 import type { ExpressionResultProps } from "../../../../core/activities/ReachTheNumber/props";
-import { restrictions } from "../AllLevels/restrictions";
+import { restrictions } from "../../../../core/activities/ReachTheNumber/restrictions";
 import { Latex } from "../Latex.tsx/Latex";
 import { WarningTooltip } from "../WarningTooltip/WarningTooltip";
 import { styles } from "./styles";

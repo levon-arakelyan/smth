@@ -7,7 +7,7 @@ export type CurrentLevelProps = {
   members: ExpressionMember[];
   goal: number;
   level: number;
-  onLevelCompleted?: () => void;
+  onLevelSelected: (newLevelIdx: number | null) => void;
 }
 
 export type LevelHeaderProps = {
@@ -53,4 +53,13 @@ export type VictoryModalProps = {
 
 export type LatexProps = {
   mathExpr: string | number | undefined;
+}
+
+export type MainMenuProps = {
+  onLevelSelected: (newLevelIdx: number | null) => void;
+}
+
+export type LevelSelectionProps = {
+  open: boolean;
+  onLevelSelected: (newLevelIdx: number | null) => void;
 }

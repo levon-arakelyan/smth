@@ -1,6 +1,6 @@
 import type { SxProps, Theme } from "@mui/material";
 import type { IHistoryStep } from "../../../../core/activities/ReachTheNumber/history/ihistory-step";
-import { mainVisibleBox } from "../shared-styles";
+import { mainVisibleBox } from "../../../../core/main/shared-styles";
 
 const scrollbarWidth = 6;
 
