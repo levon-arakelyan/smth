@@ -10,9 +10,12 @@ import type { CurrentLevelProps } from '../../../../core/activities/ReachTheNumb
 import { LevelHeader } from '../LevelHeader/LevelHeader';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { useLevel } from '../../../../core/activities/ReachTheNumber/hooks/useLevel';
+import levelWinSound from '../../../../assets/sounds/level-win.mp3';
+import { useSound } from '../../../../hooks/useSound';
 
 export function CurrentLevel({start, members, goal, level, onLevelSelected}: CurrentLevelProps) {
   const { currentLevelIndex } = useLevel();
+  const { play } = useSound(levelWinSound, {volume: 0.5});
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
@@ -30,6 +33,7 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
     if (result === goal) {
       setVictory(true);
       onHistoryChanged(undefined, false, result);
+      play();
     } else {
       onHistoryChanged(new Expression(result, expression.members))
     }

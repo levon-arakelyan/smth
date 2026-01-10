@@ -8,8 +8,8 @@ Add scrollbar for main equation in mobile devices (or decide better way to show 
 +Add ability to select level
 +Store current level in local storage more securely
 +Start number - styling same as result
++Victory sound
 Show something when player completes all levels
-Victory sound
 Add author solution steps count
 Show operation symbols in history with spaces from start and end
 Create more levels
