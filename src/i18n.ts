@@ -41,6 +41,9 @@ i18n.use(initReactI18next).init({
         levels: 'All levels',
         selectLang: 'Select language',
         selectLvl: 'Select level',
+        allLevelsPassed: 'You passed all levels!',
+        cake: 'Here is your cake',
+        backToFirstLvl: 'Restart the game'
       },
     },
     ru: {
@@ -65,6 +68,9 @@ i18n.use(initReactI18next).init({
         levels: 'Все уровни',
         selectLang: 'Выбрать язык',
         selectLvl: 'Выбрать уровень',
+        allLevelsPassed: 'Ты прошёл все уровни!',
+        cake: 'Вот твой торт',
+        backToFirstLvl: 'Начать заново'
       },
     },
   },

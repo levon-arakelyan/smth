@@ -15,6 +15,8 @@ export function useLevel() {
   const loadLevelStore = (): ILevelStore => {
     const saved = LocalStorageService.get<ILevelStore>(LocalStorageKey.ReachTheNumber);
     if (!saved) {
+      const newStore = { levelIdx: 0, maxLevelIdx: 0 };
+      LocalStorageService.set(LocalStorageKey.ReachTheNumber, newStore);
       return { levelIdx: 0, maxLevelIdx: 0 };
     }
 
@@ -44,6 +46,7 @@ export function useLevel() {
     currentLevelIndex,
     currentLevel: levels[currentLevelIndex].N,
     maxLevelIndex,
+    lastLevelIndex: levels.length - 1,
     maxLevel: levels[maxLevelIndex].N,
     saveLevel
   };

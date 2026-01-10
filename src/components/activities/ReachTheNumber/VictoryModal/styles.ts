@@ -9,5 +9,11 @@ export const styles: Record<string, SxProps<Theme>> = {
   },
   victoryIcon: {
     fontSize: 64
+  },
+  emoji: {
+    color: 'black'
+  },
+  cakeIcon: {
+    fontSize: 100
   }
 }

@@ -9,7 +9,8 @@ Add scrollbar for main equation in mobile devices (or decide better way to show 
 +Store current level in local storage more securely
 +Start number - styling same as result
 +Victory sound
-Show something when player completes all levels
++Show something when player completes all levels
++Show operation symbols in history with spaces from start and end
 Add author solution steps count
-Show operation symbols in history with spaces from start and end
 Create more levels
+Add ability to mute/unmute

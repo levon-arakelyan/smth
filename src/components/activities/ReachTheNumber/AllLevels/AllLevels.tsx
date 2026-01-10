@@ -4,12 +4,12 @@ import { CurrentLevel } from "../CurrentLevel/CurrentLevel";
 import { useLevel } from "../../../../core/activities/ReachTheNumber/hooks/useLevel";
 
 export function ReachTheNumber() {
-  const { currentLevelIndex, saveLevel } = useLevel();
+  const { currentLevelIndex, lastLevelIndex, saveLevel } = useLevel();
   const onLevelSelected = (levelIndex: number | null) => {
     if (levelIndex == null) {
       return;
     }
-    saveLevel(levelIndex)
+    saveLevel(levelIndex > lastLevelIndex ? 0 : levelIndex)
   };
 
   const allLevels = levels.map(l => ({...l, expr: l.expr.build()}));
