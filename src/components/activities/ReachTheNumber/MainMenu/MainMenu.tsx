@@ -1,5 +1,5 @@
 import { MoreVert } from '@mui/icons-material';
-import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useMenuAnchor } from '../../../../hooks/useMenuAnchor';
 import { LanguageSwitcher } from '../../../main/LanguageSwitcher/LanguageSwitcher';
 import { useState } from 'react';
@@ -9,9 +9,13 @@ import { useTranslation } from 'react-i18next';
 import { styles } from './styles';
 import { LevelSelection } from '../LevelSelection/LevelSelection';
 import type { MainMenuProps } from '../../../../core/activities/ReachTheNumber/props';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import { useSoundSettings } from '../../../../contexts/SoundContext';
 
 export function MainMenu({ onLevelSelected }: MainMenuProps) {
   const { t } = useTranslation();
+  const { muted, toggleMute } = useSoundSettings();
 
   const { anchorEl, openMenu, closeMenu, isOpen } = useMenuAnchor();
   const [isLangModalOpen, setIsLangModalOpen] = useState<boolean>(false);
@@ -27,9 +31,14 @@ export function MainMenu({ onLevelSelected }: MainMenuProps) {
     setIsLevelModalOpen(true);
   }
 
+  const setVolume = () => {
+    closeMenu();
+    toggleMute();
+  }
+
   return <>
     <IconButton onClick={openMenu}>
-      <MoreVert sx={{width: 40, height: 40}}/>
+      <MoreVert sx={styles.menuIcon}/>
     </IconButton>
     <Menu anchorEl={anchorEl} onClose={closeMenu} open={isOpen}>
       <MenuItem onClick={selectLevel}>
@@ -37,6 +46,11 @@ export function MainMenu({ onLevelSelected }: MainMenuProps) {
       </MenuItem>
       <MenuItem onClick={selectLanguage}>
         <LanguageIcon sx={styles.menuItemIcon}/>{t('selectLang')}
+      </MenuItem>
+      <MenuItem onClick={setVolume}>
+        {muted ?
+          <><VolumeOffIcon sx={styles.menuItemIcon}/>Unmute</> :
+          <><VolumeUpIcon sx={styles.menuItemIcon}/>Mute</>}
       </MenuItem>
     </Menu>
     <LanguageSwitcher open={isLangModalOpen} onLanguageSelected={() => setIsLangModalOpen(false)}/>

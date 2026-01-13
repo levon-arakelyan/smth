@@ -11,11 +11,12 @@ import { LevelHeader } from '../LevelHeader/LevelHeader';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { useLevel } from '../../../../core/activities/ReachTheNumber/hooks/useLevel';
 import levelWinSound from '../../../../assets/sounds/level-win.mp3';
-import { useSound } from '../../../../hooks/useSound';
+import { useAudio } from '../../../../hooks/useAudio';
 
 export function CurrentLevel({start, members, goal, level, onLevelSelected}: CurrentLevelProps) {
   const { currentLevelIndex } = useLevel();
-  const { play } = useSound(levelWinSound, {volume: 0.5});
+  const { play } = useAudio(levelWinSound, { volume: 0.5 });
+
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
@@ -25,6 +26,7 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
 
   const onExpressionMemberSelected = (): void => {
     setCurrentResult(expression.calculate());
+    play();
   }
 
   const calculate = (): void => {
@@ -86,7 +88,7 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
     <VictoryModal open={victory} goal={goal} onNextLevelClicked={toNextLevel}/>
     <Box sx={styles.mainBox}>
       <Box sx={styles.playgroundBox}>
-        <Box sx={{position: 'absolute', top: 0, right: 0}}>
+        <Box sx={styles.mainMenuBox}>
           <MainMenu onLevelSelected={(i) => onLevelSelected(i)}/>
         </Box>
         <LevelHeader

@@ -2,6 +2,7 @@ import { levels } from "../../../../core/activities/ReachTheNumber/levels";
 import { MathJaxContext } from "better-react-mathjax";
 import { CurrentLevel } from "../CurrentLevel/CurrentLevel";
 import { useLevel } from "../../../../core/activities/ReachTheNumber/hooks/useLevel";
+import { SoundProvider } from "../../../../contexts/SoundContext";
 
 export function ReachTheNumber() {
   const { currentLevelIndex, lastLevelIndex, saveLevel } = useLevel();
@@ -15,14 +16,16 @@ export function ReachTheNumber() {
   const allLevels = levels.map(l => ({...l, expr: l.expr.build()}));
   const level = allLevels[currentLevelIndex];
 
-  return <MathJaxContext>
-    <CurrentLevel
-      key={level.N}
-      start={level.start}
-      goal={level.goal}
-      level={level.N}
-      members={level.expr}
-      onLevelSelected={onLevelSelected}
-    />
-  </MathJaxContext>;
+  return <SoundProvider>
+    <MathJaxContext>
+      <CurrentLevel
+        key={level.N}
+        start={level.start}
+        goal={level.goal}
+        level={level.N}
+        members={level.expr}
+        onLevelSelected={onLevelSelected}
+      />
+    </MathJaxContext>
+  </SoundProvider>;
 }

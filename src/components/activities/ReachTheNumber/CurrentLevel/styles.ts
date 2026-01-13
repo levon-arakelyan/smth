@@ -20,6 +20,11 @@ export const styles: Record<string, SxProps<Theme>> = {
     backgroundSize: '400% 400%',
     animation: `${bgAnimation} 10s ease infinite`,
   },
+  mainMenuBox: {
+    position: 'absolute',
+    top: 0,
+    right: 0
+  },
   playgroundBox: {
     width: mainVisibleBox.width,
     borderRadius: mainVisibleBox.borderRadius,

@@ -1,13 +1,15 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
+import { useSoundSettings } from '../contexts/SoundContext';
 
-export interface UseSoundOptions {
-  volume?: number; // 0 to 1
+export interface UseAudioOptions {
+  volume?: number;
   loop?: boolean;
 }
 
-export function useSound(src: string, options: UseSoundOptions = {}) {
+export function useAudio(src: string, options: UseAudioOptions = {}) {
   const { volume = 1, loop = false } = options;
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const { muted } = useSoundSettings();
 
   if (!audioRef.current) {
     const audio = new Audio(src);
@@ -15,6 +17,15 @@ export function useSound(src: string, options: UseSoundOptions = {}) {
     audio.loop = loop;
     audioRef.current = audio;
   }
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = muted;
+      if (muted) {
+        stop();
+      }
+    }
+  }, [muted]);
 
   const play = useCallback(() => {
     const audio = audioRef.current;

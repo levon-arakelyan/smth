@@ -4,7 +4,6 @@ export class LocalStorageService {
   private static storage: Storage = localStorage;
 
   public static set<T>(key: LocalStorageKey, value: T): void {
-    console.log(value)
     try {
       this.storage.setItem(key, btoa(JSON.stringify(value)));
     } catch (error) {
