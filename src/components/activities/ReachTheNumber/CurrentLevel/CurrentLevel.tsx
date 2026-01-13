@@ -9,12 +9,13 @@ import { VictoryModal } from '../VictoryModal/VictoryModal';
 import type { CurrentLevelProps } from '../../../../core/activities/ReachTheNumber/props';
 import { LevelHeader } from '../LevelHeader/LevelHeader';
 import { MainMenu } from '../MainMenu/MainMenu';
-import { useLevel } from '../../../../core/activities/ReachTheNumber/hooks/useLevel';
+import { useLevel } from '../../../../hooks/useLevel';
 import levelWinSound from '../../../../assets/sounds/level-win.mp3';
 import { useAudio } from '../../../../hooks/useAudio';
+import { LocalStorageKey } from '../../../../core/services/local-storage/local-storage-keys';
 
 export function CurrentLevel({start, members, goal, level, onLevelSelected}: CurrentLevelProps) {
-  const { currentLevelIndex } = useLevel();
+  const { currentLevelIndex } = useLevel(LocalStorageKey.ReachTheNumber);
   const { play } = useAudio(levelWinSound, { volume: 0.5 });
 
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
@@ -26,7 +27,6 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
 
   const onExpressionMemberSelected = (): void => {
     setCurrentResult(expression.calculate());
-    play();
   }
 
   const calculate = (): void => {

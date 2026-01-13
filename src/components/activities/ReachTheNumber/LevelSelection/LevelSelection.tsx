@@ -1,19 +1,20 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import type { LevelSelectionProps } from "../../../../core/activities/ReachTheNumber/props";
-import { FadeModal } from "../../../main/FadeModal/FadeModal";
 import { rows, cols, styles } from "./styles";
 import { levels, type ILevel } from "../../../../core/activities/ReachTheNumber/levels";
-import { useLevel } from "../../../../core/activities/ReachTheNumber/hooks/useLevel";
+import { useLevel } from "../../../../hooks/useLevel";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme, useMediaQuery } from "@mui/material";
 import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { LocalStorageKey } from "../../../../core/services/local-storage/local-storage-keys";
+import { FadeModal } from "../../../shared/FadeModal/FadeModal";
 
 export function LevelSelection({open, onLevelSelected}: LevelSelectionProps) {
   const theme = useTheme();
-  const { maxLevelIndex, currentLevelIndex, saveLevel } = useLevel();
+  const { maxLevelIndex, currentLevelIndex, saveLevel } = useLevel(LocalStorageKey.ReachTheNumber);
   const { t } = useTranslation();
 
   const isSmDown =  useMediaQuery(theme.breakpoints.down('sm'));

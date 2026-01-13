@@ -1,5 +1,5 @@
 import type { SxProps, Theme } from "@mui/material";
-import { mainVisibleBox } from "../../../../core/main/shared-styles";
+import { mainVisibleBox } from "../../../../core/components/shared-styles";
 
 export const styles: Record<string, SxProps<Theme>> = {
   levelContainerBox: {

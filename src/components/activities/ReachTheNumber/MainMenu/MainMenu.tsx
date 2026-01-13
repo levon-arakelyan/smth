@@ -1,7 +1,6 @@
 import { MoreVert } from '@mui/icons-material';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { useMenuAnchor } from '../../../../hooks/useMenuAnchor';
-import { LanguageSwitcher } from '../../../main/LanguageSwitcher/LanguageSwitcher';
 import { useState } from 'react';
 import LanguageIcon from '@mui/icons-material/Language';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
@@ -12,6 +11,7 @@ import type { MainMenuProps } from '../../../../core/activities/ReachTheNumber/p
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import { useSoundSettings } from '../../../../contexts/SoundContext';
+import { LanguageSwitcher } from '../../../shared/LanguageSwitcher/LanguageSwitcher';
 
 export function MainMenu({ onLevelSelected }: MainMenuProps) {
   const { t } = useTranslation();

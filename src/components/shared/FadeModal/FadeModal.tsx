@@ -1,5 +1,5 @@
 import { Backdrop, Fade, Modal } from "@mui/material";
-import type { FadeModalProps } from "../../../core/main/props";
+import type { FadeModalProps } from "../../../core/components/props";
 
 export function FadeModal({ open, children, onClose }: FadeModalProps) {
   return <Modal

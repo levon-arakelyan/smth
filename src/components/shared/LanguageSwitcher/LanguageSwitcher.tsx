@@ -1,26 +1,20 @@
 import { Box, MenuItem, MenuList, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
-import { LocalStorageService } from "../../../core/services/local-storage/local-storage";
 import { LocalStorageKey } from "../../../core/services/local-storage/local-storage-keys";
-import type { LanguageSwitcherProps } from "../../../core/main/props";
+import type { LanguageSwitcherProps } from "../../../core/components/props";
 import CheckIcon from '@mui/icons-material/Check';
 import { FadeModal } from "../FadeModal/FadeModal";
 import { defaultLanguage, Language, languageFlagUrl, languagesMap } from "../../../i18n";
-import { useEffect } from "react";
+import { useLocalStorage } from "../../../hooks/useLocalStorage";
 
 export function LanguageSwitcher({open, onLanguageSelected}: LanguageSwitcherProps) {
   const { i18n } = useTranslation();
-
-  useEffect(() => {
-    if (!LocalStorageService.get(LocalStorageKey.Language)) {
-      changeLanguage(defaultLanguage);
-    }
-  }, []);
+  const [language, setLanguage] = useLocalStorage<Language>(LocalStorageKey.Language, defaultLanguage)
 
   const changeLanguage = (lng: Language) => {
     i18n.changeLanguage(lng);
-    LocalStorageService.set(LocalStorageKey.Language, lng);
+    setLanguage(lng);
     onLanguageSelected();
   };
 
@@ -32,7 +26,7 @@ export function LanguageSwitcher({open, onLanguageSelected}: LanguageSwitcherPro
         </Box>
         <Typography variant='h6' sx={styles.countryCodeText}>{languagesMap.get(lng)}</Typography>
       </Box>
-      {LocalStorageService.get(LocalStorageKey.Language) == lng && <CheckIcon fontSize="large" color='success' />}
+      {language == lng && <CheckIcon fontSize="large" color='success' />}
     </Box>
   }
 

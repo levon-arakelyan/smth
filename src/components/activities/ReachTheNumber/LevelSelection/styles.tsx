@@ -1,6 +1,6 @@
 import type { Theme } from "@mui/material";
 import type { SxProps } from "@mui/material/styles";
-import { centeredModal } from "../../../../core/main/shared-styles";
+import { centeredModal } from "../../../../core/components/shared-styles";
 
 export const rows = 3;
 export const cols = {xs: 3, sm: 5};

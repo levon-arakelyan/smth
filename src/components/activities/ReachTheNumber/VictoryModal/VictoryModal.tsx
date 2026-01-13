@@ -3,13 +3,14 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import { useTranslation } from 'react-i18next';
 import type { VictoryModalProps } from '../../../../core/activities/ReachTheNumber/props';
 import { styles } from "./styles";
-import { FadeModal } from '../../../main/FadeModal/FadeModal';
-import { useLevel } from '../../../../core/activities/ReachTheNumber/hooks/useLevel';
+import { useLevel } from '../../../../hooks/useLevel';
 import CakeIcon from '@mui/icons-material/Cake';
+import { LocalStorageKey } from '../../../../core/services/local-storage/local-storage-keys';
+import { FadeModal } from '../../../shared/FadeModal/FadeModal';
 
 export function VictoryModal({open, goal, onNextLevelClicked}: VictoryModalProps) {
   const { t } = useTranslation();
-  const { currentLevelIndex, lastLevelIndex } = useLevel();
+  const { currentLevelIndex, lastLevelIndex } = useLevel(LocalStorageKey.ReachTheNumber);
 
   return <FadeModal open={open}>
     <Box sx={styles.mainBox}>

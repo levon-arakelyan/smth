@@ -1,5 +1,5 @@
 import type { SxProps, Theme } from "@mui/material";
-import { centeredModal } from "../../../core/main/shared-styles";
+import { centeredModal } from "../../../core/components/shared-styles";
 
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {

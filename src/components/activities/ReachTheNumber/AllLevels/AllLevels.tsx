@@ -1,11 +1,12 @@
 import { levels } from "../../../../core/activities/ReachTheNumber/levels";
 import { MathJaxContext } from "better-react-mathjax";
 import { CurrentLevel } from "../CurrentLevel/CurrentLevel";
-import { useLevel } from "../../../../core/activities/ReachTheNumber/hooks/useLevel";
+import { useLevel } from "../../../../hooks/useLevel";
 import { SoundProvider } from "../../../../contexts/SoundContext";
+import { LocalStorageKey } from "../../../../core/services/local-storage/local-storage-keys";
 
 export function ReachTheNumber() {
-  const { currentLevelIndex, lastLevelIndex, saveLevel } = useLevel();
+  const { currentLevelIndex, lastLevelIndex, saveLevel } = useLevel(LocalStorageKey.ReachTheNumber);
   const onLevelSelected = (levelIndex: number | null) => {
     if (levelIndex == null) {
       return;

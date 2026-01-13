@@ -1,6 +1,6 @@
 import { keyframes } from "@emotion/react";
 import type { SxProps, Theme } from "@mui/material";
-import { mainVisibleBox } from "../../../../core/main/shared-styles";
+import { mainVisibleBox } from "../../../../core/components/shared-styles";
 
 const bgAnimation = keyframes`
   0% { background-position: 0% 50%; }
