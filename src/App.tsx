@@ -1,5 +1,5 @@
 import { CssBaseline } from '@mui/material';
-import { ReachTheNumber } from './components/activities/ReachTheNumber/AllLevels/AllLevels';
+import { ReachTheNumber } from './components/activities/ReachTheNumber/CurrentLevel/CurrentLevel';
 
 function App() {
   return (

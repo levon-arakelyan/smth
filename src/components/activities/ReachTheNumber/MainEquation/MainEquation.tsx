@@ -56,7 +56,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
       <Button variant='contained' onClick={onSubmitted} sx={styles.nextBtn} disabled={!!handledResult?.errorText}>
         <Typography variant='h5' sx={styles.nextBtnText}>{t('next')}</Typography>
         <Typography variant='h5' sx={styles.nextBtnExclmation}>!</Typography>
-        {historyStepsDiscarded && <WarningTooltip text={t('removeAllFaded') + t('addNewOne')} />}
+        {historyStepsDiscarded && <WarningTooltip text={t('removeAllFaded')} />}
       </Button>
     </Box>
   </Box>

@@ -1,23 +1,25 @@
 import type { Theme } from "@mui/material";
 import type { SxProps } from "@mui/material/styles";
-import { centeredModal } from "../../../../core/components/shared-styles";
 
 export const rows = 3;
 export const cols = {xs: 3, sm: 5};
 export const styles: Record<string, SxProps<Theme>> = {
+  dialogContent: {
+    px: {xs: 0, sm: 3}
+  },
   mainBox: {
-    ...centeredModal,
-    width: {xs: 'calc(100% - 32px)', sm: 450},
-    pt: 2,
-    pb: 3,
-    px: 1
+    borderRadius: 4,
+    p: 0
   },
   selectLvlText: {
-    mb: 2
+    mb: 2,
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   mainContentBox: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    mb: 2
   },
   arrowIcon: {
     borderRadius: '30%'
@@ -26,7 +28,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'grid',
     gridTemplateColumns: {xs: `repeat(${cols.xs}, 1fr)`, sm: `repeat(${cols.sm}, 1fr)`},
     gap: 2,
-    flexGrow: 1
+    flexGrow: 1,
   },
   levelIcon: {
     height: 52,

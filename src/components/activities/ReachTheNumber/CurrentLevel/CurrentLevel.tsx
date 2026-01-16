@@ -1,21 +1,23 @@
 import { Box, createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Expression } from '../../../../core/activities/ReachTheNumber/expressions/expression';
 import { History } from '../../../../core/activities/ReachTheNumber/history/equations-history';
 import { MainEquation } from '../MainEquation/MainEquation';
 import { EquationsHistory } from '../EquationsHistory/EquationsHistory';
 import { styles } from './styles';
 import { VictoryModal } from '../VictoryModal/VictoryModal';
-import type { CurrentLevelProps } from '../../../../core/activities/ReachTheNumber/props';
 import { LevelHeader } from '../LevelHeader/LevelHeader';
 import { MainMenu } from '../MainMenu/MainMenu';
 import { useLevel } from '../../../../hooks/useLevel';
 import levelWinSound from '../../../../assets/sounds/level-win.mp3';
 import { useAudio } from '../../../../hooks/useAudio';
 import { LocalStorageKey } from '../../../../core/services/local-storage/local-storage-keys';
+import { SoundProvider } from '../../../../contexts/SoundContext';
+import { MathJaxContext } from 'better-react-mathjax';
 
-export function CurrentLevel({start, members, goal, level, onLevelSelected}: CurrentLevelProps) {
-  const { currentLevelIndex } = useLevel(LocalStorageKey.ReachTheNumber);
+export function ReachTheNumber() {
+  const { currentLevelIndex, currentLevel, lastLevelIndex, saveLevel } = useLevel(LocalStorageKey.ReachTheNumber);
+  const { start, members, goal } = currentLevel;
   const { play } = useAudio(levelWinSound, { volume: 0.5 });
 
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
@@ -25,14 +27,23 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
   const [showTooltip, setShowTooltip] = useState<boolean>(false);
   const [victory, setVictory] = useState<boolean>(false);
 
+  useEffect(() => {
+    restart();
+  }, [currentLevel]);
+
   const onExpressionMemberSelected = (): void => {
     setCurrentResult(expression.calculate());
   }
 
-  const calculate = (): void => {
-    history.insert(expression);
+  const onSubmitted = (): void => {
+    if (!history.insert(expression)) {
+      onHistoryChanged(expression);
+      return;
+    }
+
     const result = expression.calculate();
     if (result === goal) {
+      saveLevel(currentLevelIndex, currentLevelIndex + 1);
       setVictory(true);
       onHistoryChanged(undefined, false, result);
       play();
@@ -41,9 +52,23 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
     }
   }
 
+  const retryLevel = (): void => {
+    setVictory(false);
+    restart();
+  }
+
   const toNextLevel = (): void => {
     setVictory(false);
-    onLevelSelected(currentLevelIndex + 1);
+    const newLevel = currentLevelIndex + 1;
+    saveLevel(newLevel > lastLevelIndex ? 0 : newLevel);
+  }
+
+  const restart = () => {
+    const expr = new Expression(start, members);
+    setHistory(new History());
+    setExpression(expr);
+    setCurrentResult(expr.calculate());
+    setShowTooltip(false);
   }
 
   const onHistoryCleared = () => {
@@ -84,23 +109,25 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
   }
 
   const theme = responsiveFontSizes(createTheme());
-  return <ThemeProvider theme={theme}>
-    <VictoryModal open={victory} goal={goal} onNextLevelClicked={toNextLevel}/>
+  return <SoundProvider><MathJaxContext><ThemeProvider theme={theme}>
+    <VictoryModal
+      history={history}
+      open={victory}
+      onNextLevelClicked={toNextLevel}
+      onRetryClicked={retryLevel}
+    />
     <Box sx={styles.mainBox}>
       <Box sx={styles.playgroundBox}>
         <Box sx={styles.mainMenuBox}>
-          <MainMenu onLevelSelected={(i) => onLevelSelected(i)}/>
+          <MainMenu onLevelSelected={(i) => saveLevel(i)}/>
         </Box>
-        <LevelHeader
-          goal={goal}
-          level={level}
-        />
+        <LevelHeader />
         <MainEquation
           expression={expression}
           historyStepsDiscarded={showTooltip}
           currentResult={currentResult}
           onExpressionMemberSelected={onExpressionMemberSelected}
-          onSubmitted={calculate}
+          onSubmitted={onSubmitted}
         />
         <EquationsHistory
           history={history}
@@ -111,5 +138,5 @@ export function CurrentLevel({start, members, goal, level, onLevelSelected}: Cur
         />
       </Box>
     </Box>
-  </ThemeProvider>
+  </ThemeProvider></MathJaxContext></SoundProvider>
 }

@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Dialog, DialogContent, IconButton, Typography } from "@mui/material";
 import type { LevelSelectionProps } from "../../../../core/activities/ReachTheNumber/props";
 import { rows, cols, styles } from "./styles";
 import { levels, type ILevel } from "../../../../core/activities/ReachTheNumber/levels";
@@ -10,22 +10,20 @@ import LockOutlineIcon from '@mui/icons-material/LockOutline';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { LocalStorageKey } from "../../../../core/services/local-storage/local-storage-keys";
-import { FadeModal } from "../../../shared/FadeModal/FadeModal";
 
-export function LevelSelection({open, onLevelSelected}: LevelSelectionProps) {
+export function LevelSelection({open, onLevelSelected, onClosed}: LevelSelectionProps) {
   const theme = useTheme();
-  const { maxLevelIndex, currentLevelIndex, saveLevel } = useLevel(LocalStorageKey.ReachTheNumber);
+  const { maxLevelIndex, currentLevelIndex } = useLevel(LocalStorageKey.ReachTheNumber);
   const { t } = useTranslation();
 
   const isSmDown =  useMediaQuery(theme.breakpoints.down('sm'));
   const itemsCount = rows * (isSmDown ? cols.xs : cols.sm);
-  const [currentPage, setCurrentPage] = useState<number>(currentLevelIndex % itemsCount);
+  const [currentPage, setCurrentPage] = useState<number>(Math.floor(currentLevelIndex / itemsCount));
 
   const onLevelClicked = (level: ILevel | null, i: number) => {
     if (!level) {
       return;
     }
-    saveLevel(i);
     onLevelSelected(i)
   }
 
@@ -43,8 +41,8 @@ export function LevelSelection({open, onLevelSelected}: LevelSelectionProps) {
     return chunks;
   })();
 
-  return <FadeModal open={open} onClose={() => onLevelSelected(null)}>
-    <Box sx={styles.mainBox}>
+  return <Dialog open={open} onClose={onClosed} slotProps={{paper: {sx: styles.mainBox}}}>
+    <DialogContent sx={styles.dialogContent}>
       <Typography variant="h4" sx={styles.selectLvlText}>{t('selectLvl')}</Typography>
       <Box sx={styles.mainContentBox}>
         <IconButton
@@ -65,7 +63,7 @@ export function LevelSelection({open, onLevelSelected}: LevelSelectionProps) {
                 onClick={() => onLevelClicked(level, i)}
               >
                 {level && <Typography variant="h6" sx={styles.levelIconText}>
-                  {isActive(i) ? level.N : <LockOutlineIcon/>}
+                  {isActive(i) ? level.level : <LockOutlineIcon/>}
                 </Typography> }
               </IconButton>
             </Box>
@@ -80,6 +78,6 @@ export function LevelSelection({open, onLevelSelected}: LevelSelectionProps) {
           <ChevronRightIcon fontSize="large" />
         </IconButton>
       </Box>
-    </Box>
-  </FadeModal>;
+    </DialogContent>
+  </Dialog>;
 }

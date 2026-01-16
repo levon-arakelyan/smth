@@ -1,11 +1,9 @@
 import type { SxProps, Theme } from "@mui/material";
-import { centeredModal } from "../../../core/components/shared-styles";
 
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
-    ...centeredModal,
-    py: 2,
-    width: 350
+    width: '400px',
+    borderRadius: 4
   },
   languageCard: {
     padding: 1

@@ -49,11 +49,16 @@ export function MainMenu({ onLevelSelected }: MainMenuProps) {
       </MenuItem>
       <MenuItem onClick={setVolume}>
         {muted ?
-          <><VolumeOffIcon sx={styles.menuItemIcon}/>Unmute</> :
-          <><VolumeUpIcon sx={styles.menuItemIcon}/>Mute</>}
+          <><VolumeOffIcon sx={styles.menuItemIcon}/>{t('unmute')}</> :
+          <><VolumeUpIcon sx={styles.menuItemIcon}/>{t('mute')}</>}
       </MenuItem>
     </Menu>
-    <LanguageSwitcher open={isLangModalOpen} onLanguageSelected={() => setIsLangModalOpen(false)}/>
-    <LevelSelection open={isLevelModalOpen} onLevelSelected={(i) => {setIsLevelModalOpen(false); onLevelSelected(i)}} />
+    <LanguageSwitcher
+      open={isLangModalOpen}
+      onLanguageSelected={() => setIsLangModalOpen(false)}/>
+    <LevelSelection
+      open={isLevelModalOpen}
+      onLevelSelected={(i) => { setIsLevelModalOpen(false); onLevelSelected(i) }}
+      onClosed={() => setIsLevelModalOpen(false)}/>
   </>
 }

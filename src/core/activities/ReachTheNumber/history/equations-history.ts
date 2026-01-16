@@ -8,9 +8,18 @@ export class History {
     return this.steps[this.steps.length - 1];
   }
 
-  public insert(expr: Expression): void {
+  public get length(): number {
+    return this.steps.length;
+  }
+
+  public insert(expr: Expression): boolean {
+    const hadDiscarded = this.hasDiscarded();
     this.steps = this.steps.filter(x => !x.discarded);
-    this.steps.push({expr, renderedExpr: expr.renderHistory(), discarded: false});
+    if (!hadDiscarded) {
+      this.steps.push({expr, renderedExpr: expr.renderHistory(), discarded: false});
+      return true;
+    }
+    return false;
   }
 
   public clear(onCleared: () => void): void {

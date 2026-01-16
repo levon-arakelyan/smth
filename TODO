@@ -13,5 +13,5 @@ Create more levels
 +Show something when player completes all levels
 +Show operation symbols in history with spaces from start and end
 +Add ability to mute/unmute
-Add author solution steps count
++Add author solution steps count
 Bug: when refreshing page, the first level loads for less than a second, and then the correct level

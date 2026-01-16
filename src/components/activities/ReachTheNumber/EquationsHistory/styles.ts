@@ -20,6 +20,12 @@ export const styles: Record<string, SxProps<Theme>> = {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
+  historyTitleText: {
+    textAlign: 'center',
+    pb: 2,
+    fontWeight: 'bold',
+    mx: -2
+  },
   historyContainerBox: {
     marginX: `-${historyBoxMargin}px`,
     paddingX: `${historyBoxPadding}px`,

@@ -1,10 +1,9 @@
-import { Box, MenuItem, MenuList, Typography } from "@mui/material";
+import { Box, Dialog, DialogContent, MenuItem, MenuList, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { styles } from "./styles";
 import { LocalStorageKey } from "../../../core/services/local-storage/local-storage-keys";
 import type { LanguageSwitcherProps } from "../../../core/components/props";
 import CheckIcon from '@mui/icons-material/Check';
-import { FadeModal } from "../FadeModal/FadeModal";
 import { defaultLanguage, Language, languageFlagUrl, languagesMap } from "../../../i18n";
 import { useLocalStorage } from "../../../hooks/useLocalStorage";
 
@@ -30,8 +29,8 @@ export function LanguageSwitcher({open, onLanguageSelected}: LanguageSwitcherPro
     </Box>
   }
 
-  return <FadeModal open={open} onClose={onLanguageSelected}>
-    <Box sx={styles.mainBox}>
+  return <Dialog open={open} onClose={onLanguageSelected} slotProps={{paper: {sx: styles.mainBox}}}>
+    <DialogContent>
       <MenuList>
         <MenuItem onClick={() => changeLanguage(Language.English)}>
           {languageOption(Language.English)}
@@ -40,6 +39,6 @@ export function LanguageSwitcher({open, onLanguageSelected}: LanguageSwitcherPro
           {languageOption(Language.Russian)}
         </MenuItem>
       </MenuList>
-    </Box>
-  </FadeModal>
+    </DialogContent>
+  </Dialog>
 }

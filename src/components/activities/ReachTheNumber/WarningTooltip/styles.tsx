@@ -19,6 +19,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     right: 0,
     transform: 'translate(50%, -50%)',
     borderRadius: '50%',
-    backgroundColor: mainVisibleBox.backgroundColor
+    backgroundColor: mainVisibleBox.backgroundColor,
+    cursor: 'pointer'
   }
 }

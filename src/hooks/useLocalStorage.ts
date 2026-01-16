@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { LocalStorageKey } from '../core/services/local-storage/local-storage-keys';
 
-export function useLocalStorage<T>(key: LocalStorageKey, defaultValue: T) {
+export function useLocalStorage<T>(key: string, defaultValue: T) {
   const readValue = useCallback((): T => {
     try {
       const item = localStorage.getItem(key);
@@ -14,13 +13,15 @@ export function useLocalStorage<T>(key: LocalStorageKey, defaultValue: T) {
 
   const [storedValue, setStoredValue] = useState<T>(readValue);
 
-  useEffect(() => {
+  const setValue = useCallback((value: T) => {
     try {
-      localStorage.setItem(key, btoa(JSON.stringify(storedValue)));
+      localStorage.setItem(key, btoa(JSON.stringify(value)));
+      setStoredValue(value);
+      window.dispatchEvent(new Event('local-storage'));
     } catch (error) {
       console.error('useLocalStorage write error:', error);
     }
-  }, [key, storedValue]);
+  }, [key]);
 
   useEffect(() => {
     const handleStorage = (event: StorageEvent) => {
@@ -28,9 +29,19 @@ export function useLocalStorage<T>(key: LocalStorageKey, defaultValue: T) {
         setStoredValue(readValue());
       }
     };
+
+    const handleCustomEvent = () => {
+      setStoredValue(readValue());
+    };
+
     window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    window.addEventListener('local-storage', handleCustomEvent);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('local-storage', handleCustomEvent);
+    };
   }, [key, readValue]);
 
-  return [storedValue, setStoredValue] as const;
+  return [storedValue, setValue] as const;
 }

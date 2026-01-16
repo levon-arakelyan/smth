@@ -10,11 +10,6 @@ export type CurrentLevelProps = {
   onLevelSelected: (newLevelIdx: number | null) => void;
 }
 
-export type LevelHeaderProps = {
-  goal: number;
-  level: number;
-}
-
 export type MainEquationProps = {
   expression: Expression;
   historyStepsDiscarded: boolean;
@@ -47,8 +42,9 @@ export type WarningTooltipProps = {
 
 export type VictoryModalProps = {
   open: boolean;
-  goal: number;
+  history: History
   onNextLevelClicked: () => void;
+  onRetryClicked: () => void;
 }
 
 export type LatexProps = {
@@ -56,10 +52,11 @@ export type LatexProps = {
 }
 
 export type MainMenuProps = {
-  onLevelSelected: (newLevelIdx: number | null) => void;
+  onLevelSelected: (newLevelIdx: number) => void;
 }
 
 export type LevelSelectionProps = {
   open: boolean;
-  onLevelSelected: (newLevelIdx: number | null) => void;
+  onLevelSelected: (newLevelIdx: number) => void;
+  onClosed: () => void;
 }
