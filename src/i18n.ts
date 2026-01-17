@@ -45,7 +45,7 @@ i18n.use(initReactI18next).init({
         history: 'History ({{steps}} step{{ending}})',
         tryAgain: 'Try again',
         levelChallenge: 'But a sign from above hints you could finish this level in just {{steps}} step{{ending}}. Wanna try?',
-        levelPassed: 'Great job! You completed the level in exactly {{steps}} step{{ending}}. Ready for the next challenge?',
+        levelPassed: 'Great job! You completed the level in exactly {{steps}} step{{ending}} as it was intended. Ready for the next challenge?',
         levelRespect: 'Excellent! You found an even better solution than it was intended. Keep it up! Wanna continue?',
         mute: 'Mute',
         unmute: 'Unmute'
@@ -77,7 +77,7 @@ i18n.use(initReactI18next).init({
         history: 'История ({{steps}} шаг{{ending}})',
         tryAgain: 'Заново',
         levelChallenge: 'Но небеса подсказывают: ты сможешь пройти этот уровень всего за {{steps}} шаг{{ending}}. Хочешь попробовать?',
-        levelPassed: "Отлично! Ты прошёл уровень ровно за {{steps}} шаг{{ending}}. Продолжаем?",
+        levelPassed: "Отлично! Ты прошёл уровень ровно за {{steps}} шаг{{ending}}, как и задумывалось. Продолжаем?",
         levelRespect: "Превосходно! Твоё решение заняло меньше шагов, чем задумывалось. Так держать! Идём дальше?",
         mute: 'Выключить звуки',
         unmute: 'Включить звуки'

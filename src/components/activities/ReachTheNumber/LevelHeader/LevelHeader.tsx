@@ -12,6 +12,8 @@ export function LevelHeader() {
     <Typography variant='h2' sx={styles.levelText}>
       {t('level')} {currentLevel.level}
     </Typography>
-    <Typography variant='h4' sx={styles.goalText}>🏅{t('goal')}: {currentLevel.goal}</Typography>
+    <Typography variant='h4' sx={styles.goalText}>🏅{t('goal')}:&nbsp;
+      <Typography variant='h4' component='span' sx={styles.goalNumber}>{currentLevel.goal}</Typography>
+    </Typography>
   </Card>
 }

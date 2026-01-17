@@ -37,29 +37,32 @@ export function VictoryModal({open, history, onNextLevelClicked, onRetryClicked}
         </Typography>
         <Typography color="text.secondary" textAlign='center'>
           {currentLevelIndex < lastLevelIndex ?
-            <Typography component='span' variant='h5'>{t('userReachedNumber', {number: currentLevel.goal})}</Typography> :
             <>
-              <Typography component='span'>{t('allLevelsPassed')}</Typography>
+              <Typography component='span' variant='h5'>{t('userReachedNumber', {number: currentLevel.goal})}</Typography>
+              <Typography component='span'>
+                <br/>
+                <br/>
+                {levelPassedText}
+              </Typography>
+            </> :
+            <>
+              <Typography component='span'>{t('allLevelsPassed')}</Typography>&nbsp;
               <Typography component='span'>{t('cake')} <Typography component='span' sx={styles.emoji}>😊</Typography></Typography>
             </>
           }
-          <Typography component='span'>
-            <br/>
-            <br/>
-            {levelPassedText}
-          </Typography>
         </Typography>
         {currentLevelIndex >= lastLevelIndex && <CakeIcon sx={styles.cakeIcon} color='warning'/>}
         <Box sx={styles.retryBox}>
-          <Button variant="outlined" color="info" onClick={onRetryClicked}>
+          {currentLevelIndex < lastLevelIndex && <Button variant="outlined" color="info" onClick={onRetryClicked}>
             <RefreshIcon sx={styles.refreshIcon}/>
             <Typography>{t('tryAgain')}</Typography>
-          </Button>
+          </Button>}
           <Button variant="contained" color="success" onClick={onNextLevelClicked} sx={styles.nextLevelBtn}>
             <Typography>{currentLevelIndex < lastLevelIndex ?
               t('nextLevel') :
-              t('backToFirstLvl')}</Typography>
-              <ChevronRightRoundedIcon/>
+              t('backToFirstLvl')}
+            </Typography>
+            <ChevronRightRoundedIcon/>
           </Button>
         </Box>
       </Stack>

@@ -15,125 +15,39 @@ export interface ILevel {
 
 export const levels: ILevel[] = [
   {
-    start: 1,
-    goal: 19,
-    authorSteps: 4,
-    expr: new Expr()
-      .ops(Addition)
-      .nums(4, 5),
-  }, {
-    start: 10,
-    goal: 14,
-    authorSteps: 4,
-    expr: new Expr()
-      .ops(Division, Addition)
-      .nums(6, 8),
-  }, {
-    start: 5,
-    goal: 31,
-    authorSteps: 6,
-    expr: new Expr()
-      .ops(Addition, Subtraction)
-      .nums(7, 10),
-  }, {
-    start: 1,
-    goal: 24,
-    authorSteps: 4,
-    expr: new Expr()
-      .ops(Multiplication, Subtraction)
-      .nums(12, 15),
-  }, {
-    start: 0,
-    goal: 73,
+    start: 8,
+    goal: 20,
     authorSteps: 3,
     expr: new Expr()
-      .ops(Multiplication, Addition)
-      .nums(10)
-      .ops(Multiplication, Addition)
-      .nums(3),
-  },
-  {
+      .ops(Addition)
+      .nums(2, 4),
+  }, {
     start: 1,
     goal: 19,
-    authorSteps: 999,
+    authorSteps: 4,
     expr: new Expr()
       .ops(Addition)
       .nums(4, 5),
   }, {
-    start: 10,
-    goal: 14,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Division, Addition)
-      .nums(6, 8),
-  }, {
     start: 5,
-    goal: 31,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Addition, Subtraction)
-      .nums(7, 10),
-  }, {
-    start: 1,
-    goal: 24,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Multiplication, Subtraction)
-      .nums(12, 15),
-  }, {
-    start: 0,
-    goal: 99,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Multiplication, Addition)
-      .nums(10)
-      .ops(Multiplication, Addition)
-      .nums(3),
-  },{
-    start: 1,
-    goal: 19,
-    authorSteps: 999,
+    goal: 37,
+    authorSteps: 4,
     expr: new Expr()
       .ops(Addition)
-      .nums(4, 5),
+      .nums(7, 11),
   }, {
-    start: 10,
-    goal: 14,
-    authorSteps: 999,
+    start: 16,
+    goal: 4,
+    authorSteps: 3,
     expr: new Expr()
       .ops(Division, Addition)
-      .nums(6, 8),
+      .nums(8),
   }, {
-    start: 5,
-    goal: 31,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Addition, Subtraction)
-      .nums(7, 10),
-  }, {
-    start: 1,
-    goal: 24,
-    authorSteps: 999,
+    start: 7,
+    goal: 9,
+    authorSteps: 4,
     expr: new Expr()
       .ops(Multiplication, Subtraction)
-      .nums(12, 15),
-  }, {
-    start: 0,
-    goal: 99,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Multiplication, Addition)
-      .nums(10)
-      .ops(Multiplication, Addition)
-      .nums(3),
-  },{
-    start: 0,
-    goal: 99,
-    authorSteps: 999,
-    expr: new Expr()
-      .ops(Multiplication, Addition)
-      .nums(10)
-      .ops(Multiplication, Addition)
       .nums(3),
   },
 ].map((lvl, i) => ({...lvl, level: i + 1, members: lvl.expr.build()}));
