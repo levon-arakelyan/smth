@@ -49,5 +49,49 @@ export const levels: ILevel[] = [
     expr: new Expr()
       .ops(Multiplication, Subtraction)
       .nums(3),
+  }, {
+    start: 20,
+    goal: 21,
+    authorSteps: 3,
+    expr: new Expr()
+      .ops(Addition, Subtraction)
+      .nums(5, 9),
+  }, {
+    start: 9,
+    goal: 16,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Multiplication, Division)
+      .nums(4, 3),
+  }, {
+    start: 18,
+    goal: 4,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Addition, Division)
+      .nums(5, 9),
+  }, {
+    start: 55,
+    goal: 25,
+    authorSteps: 5,
+    expr: new Expr()
+      .ops(Addition, Subtraction, Division)
+      .nums(11),
+  }, {
+    start: 20,
+    goal: 48,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Addition, Multiplication, Division)
+      .nums(3, 10),
+  }, {
+    start: 4,
+    goal: 48,
+    authorSteps: 5,
+    expr: new Expr()
+      .ops(Addition, Subtraction)
+      .nums(4)
+      .ops(Addition, Subtraction)
+      .nums(4)
   },
 ].map((lvl, i) => ({...lvl, level: i + 1, members: lvl.expr.build()}));

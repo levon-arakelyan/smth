@@ -43,7 +43,7 @@ export function ReachTheNumber() {
 
     const result = expression.calculate();
     if (result === goal) {
-      saveLevel(currentLevelIndex, currentLevelIndex + 1);
+      saveLevel(currentLevelIndex, Math.min(lastLevelIndex, currentLevelIndex + 1));
       setVictory(true);
       onHistoryChanged(undefined, false, result);
       play();
