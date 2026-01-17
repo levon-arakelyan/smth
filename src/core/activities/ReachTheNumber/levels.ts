@@ -26,7 +26,7 @@ export const levels: ILevel[] = [
     goal: 14,
     authorSteps: 4,
     expr: new Expr()
-      .ops(Division, Addition, Subtraction, Multiplication)
+      .ops(Division, Addition)
       .nums(6, 8),
   }, {
     start: 5,
