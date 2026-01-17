@@ -2,8 +2,8 @@ import { Box, Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import type { MainEquationProps } from "../../../../core/activities/ReachTheNumber/props";
 import { WarningTooltip } from "../WarningTooltip/WarningTooltip";
-import { styles } from "./styles";
-import React from "react";
+import { dynamicStyles, styles } from "./styles";
+import React, { useEffect, useRef, useState } from "react";
 import { useExpressionResult } from "./ExpressionResult";
 
 export function MainEquation({expression, historyStepsDiscarded, currentResult, onExpressionMemberSelected, onSubmitted}: MainEquationProps) {
@@ -12,6 +12,24 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
     start: expression.start.choice.viewSymbol,
     result: currentResult,
   });
+  const [hasScrollbar, setHasScrollbar] = useState(false);
+  const equationBoxRef = useRef<HTMLDivElement>(null);
+
+
+  useEffect(() => {
+    const box = equationBoxRef.current;
+    if (!box) return;
+
+    const checkScroll = () => {
+      const horizontal = box.scrollWidth > box.clientWidth;
+      setHasScrollbar(horizontal);
+    };
+
+    checkScroll();
+    window.addEventListener("resize", checkScroll);
+
+    return () => window.removeEventListener("resize", checkScroll);
+  }, []);
 
   const renderMembers = () => {
     const expr = [...expression.members, expression.end];
@@ -37,7 +55,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
   }
 
   return <Box sx={styles.mainBox}>
-    <Box sx={styles.equationBox}>
+    <Box sx={dynamicStyles.equationBox(hasScrollbar)} ref={equationBoxRef}>
       <Box sx={styles.expressionResultBox}>
         <Button disabled variant='outlined' sx={styles.expressionReultBtn}>
           <Typography sx={styles.expressionReultBtnText}>

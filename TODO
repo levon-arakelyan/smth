@@ -1,8 +1,8 @@
 Multiple results for same equation (sub-levels)
-Add ability for players to create own levels
 Add inequations
+Add ability for players to create own levels
 
-Add scrollbar for main equation in mobile devices (or decide better way to show equation)
+
 Create more levels
 +Make lnaugage selector responsive
 +Improve translations
@@ -16,3 +16,5 @@ Create more levels
 +Add author solution steps count
 +Bug: when refreshing page, the first level loads for less than a second, and then the correct level
 +Bug: equation flickering
++Add scrollbar for main equation in mobile devices (or decide better way to show equation)
++Fix history and bg color for horizontally flipped devices

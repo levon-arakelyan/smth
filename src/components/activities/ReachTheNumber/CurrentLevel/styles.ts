@@ -14,7 +14,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    height: '100dvh',
+    minHeight: '100vh',
     flexDirection: 'column',
     background: 'linear-gradient(-45deg, #c5cae9, #b3e5fc, #81d4fa, #e3f2fd)',
     backgroundSize: '400% 400%',

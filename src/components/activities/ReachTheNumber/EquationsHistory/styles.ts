@@ -16,7 +16,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     flexGrow: 1,
-    minHeight: 0,
+    minHeight: '300px',
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },

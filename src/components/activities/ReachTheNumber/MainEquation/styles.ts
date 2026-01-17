@@ -6,6 +6,18 @@ const expressionMemberBoxWidth = 64;
 const resultIconFontSize = 2;
 const expressionMemberBtnShadow = '0px 3px 5px 0px rgba(0,0,0,0.1);';
 
+export const dynamicStyles: Record<string, (...x: any) => SxProps<Theme>> = {
+  equationBox: (hasScrollbar) => ({
+    display: 'flex',
+    alignItems: 'center',
+    position: 'relative',
+    width: '100%',
+    justifyContent: hasScrollbar ? 'start' : 'center',
+    p: 2,
+    overflow: 'auto'
+  }),
+};
+
 export const styles: Record<string, SxProps<Theme>> = {
   mainBox: {
     width: '100%',
@@ -14,13 +26,12 @@ export const styles: Record<string, SxProps<Theme>> = {
     padding: mainVisibleBox.padding,
     display: 'flex',
     flexDirection: 'column',
-    gap: mainVisibleBox.padding
-  },
-  equationBox: {
-    display: 'flex',
     alignItems: 'center',
-    position: 'relative',
-    justifyContent: 'center'
+    position: 'sticky',
+    zIndex: 2,
+    top: 0,
+    px: 0,
+    pt: 0,
   },
   equationSubBox: {
     fontSize: `${latexFontSize}px`,
