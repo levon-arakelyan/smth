@@ -143,15 +143,6 @@ export const levels: ILevel[] = [
       .nums(-4, 6)
   }, {
     start: 4,
-    goal: -100,
-    authorSteps: 4,
-    expr: new Expr()
-      .ops(Addition, Multiplication)
-      .nums(-4, 6)
-      .ops(Addition, Multiplication)
-      .nums(-4, 6)
-  }, {
-    start: 4,
     goal: 5,
     authorSteps: 2,
     expr: new Expr()
@@ -160,6 +151,55 @@ export const levels: ILevel[] = [
         .nums(5)
         .ops(Addition, Subtraction)
         .nums(2)
+      .paren()
+  }, {
+    start: 4,
+    goal: -100,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Addition, Multiplication)
+      .nums(-4, 6)
+      .ops(Addition, Multiplication)
+      .nums(-4, 6)
+  }, {
+    start: 1,
+    goal: 120,
+    authorSteps: 1,
+    expr: new Expr()
+      .ops(Subtraction, Multiplication)
+      .paren(true)
+        .nums(3)
+        .ops(Subtraction, Addition)
+        .nums(2)
+      .paren()
+      .fact()
+  }, {
+    start: 20,
+    goal: -10,
+    authorSteps: 3,
+    expr: new Expr()
+      .ops(Addition)
+      .nums(2, 5)
+      .fact()
+      .ops(Subtraction)
+      .nums(3, 4)
+      .fact()
+  }, {
+    start: 125,
+    goal: -57,
+    authorSteps: 3,
+    expr: new Expr()
+      .ops(Addition, Subtraction, Multiplication, Division)
+      .paren(true)
+        .nums(5, 7, 11, 17, 19)
+        .ops(Addition, Subtraction, Multiplication, Division)
+        .nums(5, 7, 11, 17, 19)
+      .paren()
+      .ops(Addition, Subtraction, Multiplication, Division)
+      .paren(true)
+        .nums(5, 7, 11, 17, 19)
+        .ops(Addition, Subtraction, Multiplication, Division)
+        .nums(5, 7, 11, 17, 19)
       .paren()
   }
 ].map((lvl, i) => ({...lvl, level: i + 1, members: lvl.expr.build()}));

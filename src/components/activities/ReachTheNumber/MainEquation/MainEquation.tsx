@@ -33,7 +33,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
 
   const renderMembers = () => {
     const expr = [...expression.members, expression.end];
-    return expr.map((member, i) => {
+    return expr.map(member => {
       member.onChoiceUpdated = () => {
         onExpressionMemberSelected();
       }

@@ -7,6 +7,7 @@ import { AbsStart } from "./members/expression-wrapper-members/abs-start";
 import { AbsEnd } from "./members/expression-wrapper-members/abs-end";
 import { ParenthesisStart } from "./members/expression-wrapper-members/parenthesis-start";
 import { ParenthesisEnd } from "./members/expression-wrapper-members/parenthesis-end";
+import { Factorial } from "./members/expression-operation-members/factorial";
 
 export class ExpressionBuilder {
   private members: ExpressionMember[] = [];
@@ -48,23 +49,13 @@ export class ExpressionBuilder {
     return this;
   }
 
+  public fact(): this {
+    this.push(new ExpressionOperationMember([new Factorial()]));
+    return this;
+  }
+
   public build(): ExpressionMember[] {
     return this.members;
-  }
-
-  private sqrtStart(): this {
-    // const sqrtMember = new ExpressionSqrtMember();
-    // this.push(member);
-    // this.wrapperStack.push(member);
-    return this;
-  }
-
-  private sqrtEnd(): this {
-    if (this.wrapperStack.length === 0) {
-      throw new Error("No wrapper to close — did you call .end() too many times?");
-    }
-    this.wrapperStack.pop();
-    return this;
   }
 
   private push(member: ExpressionMember) {
