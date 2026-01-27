@@ -109,7 +109,7 @@ export function ReachTheNumber() {
   }
 
   const theme = responsiveFontSizes(createTheme());
-  return <SoundProvider><MathJaxContext><ThemeProvider theme={theme}>
+  return <SoundProvider><MathJaxContext src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"><ThemeProvider theme={theme}>
     <VictoryModal
       history={history}
       open={victory}
