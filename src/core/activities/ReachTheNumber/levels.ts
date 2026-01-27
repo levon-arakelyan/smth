@@ -87,11 +87,79 @@ export const levels: ILevel[] = [
   }, {
     start: 4,
     goal: 48,
-    authorSteps: 5,
+    authorSteps: 2,
+    expr: new Expr()
+      .ops(Subtraction, Multiplication)
+      .nums(4)
+      .ops(Subtraction, Multiplication)
+      .nums(4)
+  }, {
+    start: 15,
+    goal: 4,
+    authorSteps: 2,
+    expr: new Expr()
+      .ops(Division)
+      .nums(3, 5)
+      .ops(Addition)
+      .nums(3, 5)
+  }, {
+    start: 4,
+    goal: 7,
+    authorSteps: 1,
+    expr: new Expr()
+      .ops(Addition, Multiplication, Subtraction, Division)
+      .nums(4)
+      .ops(Addition, Multiplication, Subtraction, Division)
+      .nums(4)
+      .ops(Addition, Multiplication, Subtraction, Division)
+      .nums(4)
+  }, {
+    start: 6,
+    goal: -5,
+    authorSteps: 2,
+    expr: new Expr()
+      .ops(Subtraction)
+      .nums(2, 5)
+  }, {
+    start: -6,
+    goal: 5,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Subtraction)
+      .nums(-2, -5)
+  }, {
+    start: -6,
+    goal: 5,
+    authorSteps: 4,
     expr: new Expr()
       .ops(Addition, Subtraction)
-      .nums(4)
-      .ops(Addition, Subtraction)
-      .nums(4)
-  },
+      .nums(-4, 5)
+  }, {
+    start: 18,
+    goal: 0,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Addition, Division)
+      .nums(-4, 6)
+  }, {
+    start: 4,
+    goal: -100,
+    authorSteps: 4,
+    expr: new Expr()
+      .ops(Addition, Multiplication)
+      .nums(-4, 6)
+      .ops(Addition, Multiplication)
+      .nums(-4, 6)
+  }, {
+    start: 4,
+    goal: 5,
+    authorSteps: 2,
+    expr: new Expr()
+      .ops(Subtraction, Multiplication)
+      .paren(true)
+        .nums(5)
+        .ops(Addition, Subtraction)
+        .nums(2)
+      .paren()
+  }
 ].map((lvl, i) => ({...lvl, level: i + 1, members: lvl.expr.build()}));

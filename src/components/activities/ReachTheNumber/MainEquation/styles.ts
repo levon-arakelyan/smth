@@ -47,7 +47,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     },
     boxShadow: expressionMemberBtnShadow,
     position: 'relative',
-    width: `${expressionMemberBoxWidth}px`,
+    minWidth: `${expressionMemberBoxWidth}px`,
     height: `${expressionMemberBoxWidth}px`,
     '& p': {
       fontSize: `${latexFontSize}px`,

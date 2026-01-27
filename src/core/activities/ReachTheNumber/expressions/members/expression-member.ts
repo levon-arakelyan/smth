@@ -50,7 +50,7 @@ export abstract class ExpressionMember {
     return this.choice.viewSymbol;
   }
 
-  public renderHistoryLatex(): string {
+  public renderHistoryLatex(..._: any): string {
     return this.choice.historySymbol;
   }
 

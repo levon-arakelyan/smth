@@ -60,7 +60,7 @@ export function LevelSelection({open, onLevelSelected, onClosed}: LevelSelection
                 disabled={!isActive(i)}
                 color="primary"
                 sx={styles.levelIcon}
-                onClick={() => onLevelClicked(level, i)}
+                onClick={() => onLevelClicked(level, i + currentPage * itemsCount)}
               >
                 {level && <Typography variant="h6" sx={styles.levelIconText}>
                   {isActive(i) ? level.level : <LockOutlineIcon/>}

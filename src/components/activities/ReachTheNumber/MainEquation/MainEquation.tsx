@@ -39,14 +39,9 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
       }
       member.submembers.forEach(m => m.onChoiceUpdated = () => onExpressionMemberSelected());
 
-      const hasChoices = member.choices.length > 1;
-      const nextIsLatexWithSpace = expr[i + 1]?.choice.viewSymbol[0] == '~';
-      const prevIsLatexWithSpace = expr[i - 1]?.choice.viewSymbol[0] == '~';
-
       return <React.Fragment key={member.id}>
         <Box sx={{
-          marginLeft: !prevIsLatexWithSpace && hasChoices ? 2 : 0,
-          marginRight: !nextIsLatexWithSpace && hasChoices ? 2 : 0
+          marginLeft: 2,
         }}>
           {member.renderJSX()}
         </Box>
@@ -66,7 +61,7 @@ export function MainEquation({expression, historyStepsDiscarded, currentResult, 
       <Box sx={styles.equationSubBox}>
         {renderMembers()}
       </Box>
-      <Box sx={styles.expressionResultBox}>
+      <Box sx={{...styles.expressionResultBox, ml: 2}}>
         {expressionResultComponent}
       </Box>
     </Box>

@@ -43,7 +43,8 @@ export class Expression {
   }
 
   public renderHistory(): string {
-    let equality = this.full().map(x => x.renderHistoryLatex()).join('');
+    const full = this.full();
+    let equality = full.map((x, i) => x.renderHistoryLatex(full[i - 1])).join('');
     const result = new ExpressionNumberMember([new ExpressionMemberChoice(this.calculate())])
     return `${equality}${result.renderHistoryLatex()}`;
   }
