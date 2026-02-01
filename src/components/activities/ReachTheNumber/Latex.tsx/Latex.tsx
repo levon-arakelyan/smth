@@ -10,7 +10,7 @@ export function Latex({mathExpr}: LatexProps) {
   };
 
   return <>
-    <MathJax style={styles.mathJax(visible)} onTypeset={handleTypeset}>
+    <MathJax dynamic inline style={styles.mathJax(visible)} onTypeset={handleTypeset}>
       {`\\(${mathExpr}\\)`}
     </MathJax>
     <span style={styles.placeholder(visible)}>00</span>
