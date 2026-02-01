@@ -1,10 +1,10 @@
 {
   "name": "smth",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -15,6 +15,7 @@
     "@fontsource/roboto": "^5.2.9",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
+    "better-react-mathjax": "^2.3.0",
     "i18next": "^25.7.3",
     "mathjs": "^15.1.0",
     "react": "^19.2.0",

@@ -1,0 +1,20 @@
+Multiple results for same equation (sub-levels)
+Add inequations
+Add ability for players to create own levels
+
+
+Create more levels
++Make lnaugage selector responsive
++Improve translations
++Add ability to select level
++Store current level in local storage more securely
++Start number - styling same as result
++Victory sound
++Show something when player completes all levels
++Show operation symbols in history with spaces from start and end
++Add ability to mute/unmute
++Add author solution steps count
++Bug: when refreshing page, the first level loads for less than a second, and then the correct level
++Bug: equation flickering
++Add scrollbar for main equation in mobile devices (or decide better way to show equation)
++Fix history and bg color for horizontally flipped devices
