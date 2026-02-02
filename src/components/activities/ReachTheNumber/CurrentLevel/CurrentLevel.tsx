@@ -1,4 +1,4 @@
-import { Box, createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material';
+import { Box, createTheme, CssBaseline, responsiveFontSizes, ThemeProvider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Expression } from '../../../../core/activities/ReachTheNumber/expressions/expression';
 import { History } from '../../../../core/activities/ReachTheNumber/history/equations-history';
@@ -14,12 +14,15 @@ import { useAudio } from '../../../../hooks/useAudio';
 import { LocalStorageKey } from '../../../../core/services/local-storage/local-storage-keys';
 import { SoundProvider } from '../../../../contexts/SoundContext';
 import { MathJaxContext } from 'better-react-mathjax';
+import { SEO } from '../../../shared/Seo/Seo';
+import { useTranslation } from 'react-i18next';
 
 export function ReachTheNumber() {
   const { currentLevelIndex, currentLevel, lastLevelIndex, saveLevel } = useLevel(LocalStorageKey.ReachTheNumber);
   const { start, members, goal } = currentLevel;
   const { play } = useAudio(levelWinSound, { volume: 0.5 });
-
+  const { t } = useTranslation();
+  
   const [expression, setExpression] = useState<Expression>(new Expression(start, members));
   const [currentResult, setCurrentResult] = useState<number>(expression.calculate());
   const [history, setHistory] = useState<History>(new History());
@@ -109,34 +112,39 @@ export function ReachTheNumber() {
   }
 
   const theme = responsiveFontSizes(createTheme());
-  return <SoundProvider><MathJaxContext><ThemeProvider theme={theme}>
-    <VictoryModal
-      history={history}
-      open={victory}
-      onNextLevelClicked={toNextLevel}
-      onRetryClicked={retryLevel}
-    />
-    <Box sx={styles.mainBox}>
-      <Box sx={styles.playgroundBox}>
-        <Box sx={styles.mainMenuBox}>
-          <MainMenu onLevelSelected={(i) => saveLevel(i)}/>
-        </Box>
-        <LevelHeader />
-        <MainEquation
-          expression={expression}
-          historyStepsDiscarded={showTooltip}
-          currentResult={currentResult}
-          onExpressionMemberSelected={onExpressionMemberSelected}
-          onSubmitted={onSubmitted}
-        />
-        <EquationsHistory
+  return <>
+    <CssBaseline />
+    <SEO title={t('rtnTitle')} description={t('rtnDescription')}>
+      <SoundProvider><MathJaxContext><ThemeProvider theme={theme}>
+        <VictoryModal
           history={history}
-          onClearClicked={onHistoryCleared}
-          onRevertClicked={onHistoryReverted}
-          onRemoveFromThisStepClicked={onHistoryStepsDiscarded}
-          onUndoClicked={onHistoryStepUndid}
+          open={victory}
+          onNextLevelClicked={toNextLevel}
+          onRetryClicked={retryLevel}
         />
-      </Box>
-    </Box>
-  </ThemeProvider></MathJaxContext></SoundProvider>
+        <Box sx={styles.mainBox}>
+          <Box sx={styles.playgroundBox}>
+            <Box sx={styles.mainMenuBox}>
+              <MainMenu onLevelSelected={(i) => saveLevel(i)}/>
+            </Box>
+            <LevelHeader />
+            <MainEquation
+              expression={expression}
+              historyStepsDiscarded={showTooltip}
+              currentResult={currentResult}
+              onExpressionMemberSelected={onExpressionMemberSelected}
+              onSubmitted={onSubmitted}
+            />
+            <EquationsHistory
+              history={history}
+              onClearClicked={onHistoryCleared}
+              onRevertClicked={onHistoryReverted}
+              onRemoveFromThisStepClicked={onHistoryStepsDiscarded}
+              onUndoClicked={onHistoryStepUndid}
+            />
+          </Box>
+        </Box>
+      </ThemeProvider></MathJaxContext></SoundProvider>
+    </SEO>
+  </>;
 }
