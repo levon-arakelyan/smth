@@ -21,6 +21,8 @@ i18n.use(initReactI18next).init({
   resources: {
     gb: {
       translation: {
+        rtnTitle: 'Reach the Number',
+        rtnDescription: 'A fun and challenging number game where you aim to reach a target number by combining smaller numbers using basic arithmetic operations.',
         level: 'LEVEL',
         goal: 'Target',
         next: 'Confirm',
@@ -53,6 +55,8 @@ i18n.use(initReactI18next).init({
     },
     ru: {
       translation: {
+        rtnTitle: 'Достигни Числа',
+        rtnDescription: 'Весёлая и увлекательная игра, в которой тебе нужно достичь целевого числа, комбинируя меньшие числа с помощью базовых арифметических операций.',
         level: 'УРОВЕНЬ',
         goal: 'Цель',
         next: 'Подтвердить',
