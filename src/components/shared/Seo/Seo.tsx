@@ -1,7 +1,16 @@
 import Helmet from 'react-helmet';
 import type { SeoProps } from '../../../core/components/props';
 
-export function SEO({ title, description, schemaMarkup, children }: SeoProps) {
+export function SEO({ title, description, route, children }: SeoProps) {
+  const defaultWebsiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "url": `https://smth-fun.com/${route || ''}`,
+    "name": title,
+    "description": description,
+    "isPartOf": { "@id": "https://smth-fun.com#website" }
+  };
+
   return <>
     <Helmet>
       <title>{title}</title>
@@ -17,11 +26,9 @@ export function SEO({ title, description, schemaMarkup, children }: SeoProps) {
       <meta name="twitter:description" content={description} />
 
       {/* Structured Data (Schema Markup) */}
-      {schemaMarkup && (
-        <script type="application/ld+json">
-          {JSON.stringify(schemaMarkup)}
-        </script>
-      )}
+      <script type="application/ld+json">
+        {JSON.stringify(defaultWebsiteSchema)}
+      </script>
     </Helmet>
     {children}
   </>

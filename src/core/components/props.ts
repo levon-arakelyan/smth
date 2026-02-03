@@ -6,7 +6,6 @@ export type LanguageSwitcherProps = {
 export type SeoProps = {
   title: string;
   description: string;
-  image?: string;
-  schemaMarkup?: object;
+  route?: string;
   children: React.ReactNode;
 }
