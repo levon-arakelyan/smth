@@ -3,7 +3,13 @@
   xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://smth-fun.com/</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-03</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://smth-fun.com/reach-the-number</loc>
+    <lastmod>2026-02-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
