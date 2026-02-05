@@ -14,7 +14,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    minHeight: '100vh',
+    minHeight: '100dvh',
     flexDirection: 'column',
     background: 'linear-gradient(-45deg, #c5cae9, #b3e5fc, #81d4fa, #e3f2fd)',
     backgroundSize: '400% 400%',
@@ -24,6 +24,15 @@ export const styles: Record<string, SxProps<Theme>> = {
     position: 'absolute',
     top: 0,
     right: 0
+  },
+  backBtnBox: {
+    position: 'absolute',
+    top: 0,
+    left: 0
+  },
+  backBtnIcon: {
+    width: 40,
+    height: 40
   },
   playgroundBox: {
     width: mainVisibleBox.width,

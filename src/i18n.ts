@@ -17,12 +17,22 @@ export const defaultLanguage = Language.English;
 
 export const languageFlagUrl = (lang: Language) => `https://flagcdn.com/${lang}.svg`
 
+export const flagWidth = 28;
+
 i18n.use(initReactI18next).init({
   resources: {
     gb: {
       translation: {
+        sitePrefix: 'You always can find',
+        sitePostfix: 'here!',
+        alTitle: 'Something fun',
+        alDescription: 'Browse and choose from a variety of engaging and fun activities designed to test your skills and knowledge.',
+        backToAL: 'Back to activities list',
+        ucTitle: 'Under construction',
+        ucDescription: 'This activity is still under construction. We are working hard to bring it to you as soon as possible. Stay tuned!',
         rtnTitle: 'Reach the Number',
-        rtnDescription: 'A fun and challenging number game where you aim to reach a target number by combining smaller numbers using basic arithmetic operations.',
+        rtnDescription: 'A fun and challenging number game where you aim to reach a target number by combining other numbers using basic arithmetic operations.',
+        play: 'Play',
         level: 'LEVEL',
         goal: 'Target',
         next: 'Confirm',
@@ -55,8 +65,16 @@ i18n.use(initReactI18next).init({
     },
     ru: {
       translation: {
+        sitePrefix: 'Ты всегда можешь найти',
+        sitePostfix: 'здесь!',
+        alTitle: 'Что-то весёлое',
+        alDescription: 'Просматривай и выбирай из множества увлекательных и забавных занятий, разработанных для проверки твоих навыков и знаний.',
+        backToAL: 'Назад к списку активностей',
+        ucTitle: 'В разработке',
+        ucDescription: 'Эта активность всё ещё в разработке. Мы усердно работаем, чтобы представить её тебе как можно скорее. Следи за обновлениями!',
         rtnTitle: 'Достигни Числа',
-        rtnDescription: 'Весёлая и увлекательная игра, в которой тебе нужно достичь целевого числа, комбинируя меньшие числа с помощью базовых арифметических операций.',
+        rtnDescription: 'Весёлая и увлекательная игра, в которой тебе нужно достичь целевого числа, комбинируя другие числа с помощью базовых арифметических операций.',
+        play: 'Играть',
         level: 'УРОВЕНЬ',
         goal: 'Цель',
         next: 'Подтвердить',
