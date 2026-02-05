@@ -6,24 +6,16 @@ export const mainVisibleBox = {
   backgroundColor: 'background.paper'
 };
 
-export const centeredModal = {
-  outline: 'none',
-  border: 'none',
-  backgroundClip: 'padding-box',
-  WebkitTransform: 'translate(-50%, -50%)',
-  backfaceVisibility: 'hidden',
-  WebkitBackfaceVisibility: 'hidden',
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
-  borderRadius: 4,
-  boxShadow: 24,
-  textAlign: 'center',
-  animation: 'pop 0.4s ease-out',
-  '@keyframes pop': {
-    '0%': { transform: 'translate(-50%, -50%) scale(0.7)', opacity: 0 },
-    '100%': { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+export const colorAnimatedText = (colors: string[]) => ({
+  fontWeight: 'bold',
+  background: `linear-gradient(270deg, ${colors.join(', ')})`,
+  backgroundSize: '400% 400%',
+  WebkitBackgroundClip: 'text',
+  WebkitTextFillColor: 'transparent',
+  animation: 'textGradient 10s ease infinite',
+  '@keyframes textGradient': {
+    '0%': { backgroundPosition: '0% 50%' },
+    '50%': { backgroundPosition: '100% 50%' },
+    '100%': { backgroundPosition: '0% 50%' },
   },
-}
+})

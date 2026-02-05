@@ -54,6 +54,7 @@ export function MainMenu({ onLevelSelected }: MainMenuProps) {
       </MenuItem>
     </Menu>
     <LanguageSwitcher
+      isModal={true}
       open={isLangModalOpen}
       onLanguageSelected={() => setIsLangModalOpen(false)}/>
     <LevelSelection

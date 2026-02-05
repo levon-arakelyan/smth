@@ -1,5 +1,6 @@
 import type { SxProps, Theme } from "@mui/material";
-import { mainVisibleBox } from "../../../../core/components/shared-styles";
+import { colorAnimatedText, mainVisibleBox } from "../../../../core/components/shared-styles";
+import { grey } from "@mui/material/colors";
 
 export const styles: Record<string, SxProps<Theme>> = {
   levelContainerBox: {
@@ -15,17 +16,7 @@ export const styles: Record<string, SxProps<Theme>> = {
     textAlign: 'center',
   },
   goalNumber: {
-    fontWeight: 'bold',
     fontSize: '2rem',
-    background: 'linear-gradient(270deg, #ff6ec4, #7873f5, #4ade80)',
-    backgroundSize: '400% 400%',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    animation: 'textGradient 10s ease infinite',
-    '@keyframes textGradient': {
-      '0%': { backgroundPosition: '0% 50%' },
-      '50%': { backgroundPosition: '100% 50%' },
-      '100%': { backgroundPosition: '0% 50%' },
-    },
+    ...colorAnimatedText([grey[500], grey[700], grey[900]]),
   }
 }
