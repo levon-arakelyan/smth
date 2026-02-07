@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     createSitemap({
       hostname: 'https://smth-fun.com',
-      dynamicRoutes: ['/', '/reach-the-number'],
+      dynamicRoutes: ['/reach-the-number'],
       generateRobotsTxt: true,
     }),
   ],
