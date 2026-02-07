@@ -1,20 +1,20 @@
-import { ReachTheNumber } from './components/activities/ReachTheNumber/CurrentLevel/CurrentLevel';
-import type { RouteRecord } from 'vite-react-ssg';
-import { Navigate } from 'react-router-dom';
-import { ActivitiesList } from './components/activities-list/ActivitiesList';
-import { reachTheNumber } from './core/constants/activities';
+import { createBrowserRouter } from "react-router-dom";
+import App from "./App";
+import { ActivitiesList } from "./components/activities-list/ActivitiesList";
+import { ReachTheNumber } from "./components/activities/ReachTheNumber/CurrentLevel/CurrentLevel";
 
-export const routes: RouteRecord[] = [
+export const router = createBrowserRouter([
   {
-    path: '/',
-    element: <ActivitiesList />,
-  },
-  {
-    path: `/${reachTheNumber}`,
-    element: <ReachTheNumber />,
-  },
-  {
-    path: '*',
-    element: <Navigate to="/" replace />,
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <ActivitiesList />,
+      },
+      {
+        path: "/reach-the-number",
+        element: <ReachTheNumber />,
+      }
+    ]
   }
-]
+]);

@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://smth-fun.com/sitemap.xml
-
-User-agent: Googlebot
-Disallow: /private

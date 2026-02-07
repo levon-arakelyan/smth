@@ -1,31 +1,22 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { createHtmlPlugin } from 'vite-plugin-html';
-import ViteSitemap from 'vite-plugin-sitemap';
+import createSitemap from 'vite-plugin-sitemap';
 
 export default defineConfig({
   plugins: [
     react(),
-    ViteSitemap({
+    createSitemap({
       hostname: 'https://smth-fun.com',
-      dynamicRoutes: ['/'],
+      dynamicRoutes: ['/', '/reach-the-number'],
       generateRobotsTxt: true,
-    }),
-    createHtmlPlugin({
-      minify: true,
-      inject: {
-        data: {
-          title: 'Something fun',
-          description: 'You can always find something fun here!',
-        },
-      },
     }),
   ],
   build: {
+    target: 'es2019',
     rollupOptions: {
       output: {
         manualChunks: {
-          react: ['react', 'react-dom', 'react-router'],
+          react: ['react', 'react-dom', 'react-router-dom'],
         },
       },
     },
