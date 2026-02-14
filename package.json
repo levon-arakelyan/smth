@@ -8,6 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "postbuild": "react-snap && node scripts/cleanup.js",
+    "deploy:preview": "git checkout develop && git pull origin develop && npm run build && wrangler pages deploy dist --project-name=smth-fun",
+    "deploy:prod": "git checkout master && git pull origin master && npm run build && wrangler pages deploy dist --project-name=smth-fun",
     "lint": "eslint .",
     "preview": "vite preview",
     "analyze": "npx vite-bundle-visualizer"

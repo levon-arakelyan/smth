@@ -11,14 +11,13 @@ export default defineConfig({
       generateRobotsTxt: true,
     }),
   ],
+  optimizeDeps: {
+    exclude: ['better-react-mathjax'],
+  },
   build: {
     target: 'es2019',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom', 'react-router-dom'],
-        },
-      },
+    commonjsOptions: {
+      transformMixedEsModules: true,
     },
   },
 });
